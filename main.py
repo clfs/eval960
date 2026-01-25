@@ -9,29 +9,45 @@ import sys
 import os
 import json
 import argparse
+from dataclasses import dataclass, asdict
+from typing import Optional
+
 import chess
 import chess.engine
 
 
-def analyze_position(engine, board, time_limit):
+@dataclass
+class AnalysisResult:
+    score_cp: Optional[int]
+    mate: Optional[int]
+    depth: Optional[int]
+    nodes: Optional[int]
+    win: Optional[int] = None
+    draw: Optional[int] = None
+    loss: Optional[int] = None
+
+
+def analyze_position(engine, board, time_limit) -> AnalysisResult:
     info = engine.analyse(board, chess.engine.Limit(time=time_limit))
     score = info["score"].white()
     wdl = info.get("wdl")
 
-    data = {
-        "score_cp": score.score(),
-        "mate": score.mate(),
-        "depth": info.get("depth"),
-        "nodes": info.get("nodes"),
-    }
-
+    win, draw, loss = None, None, None
     if wdl:
         wdl_white = wdl.white()
-        data["win"] = wdl_white.wins
-        data["draw"] = wdl_white.draws
-        data["loss"] = wdl_white.losses
+        win = wdl_white.wins
+        draw = wdl_white.draws
+        loss = wdl_white.losses
 
-    return data
+    return AnalysisResult(
+        score_cp=score.score(),
+        mate=score.mate(),
+        depth=info.get("depth"),
+        nodes=info.get("nodes"),
+        win=win,
+        draw=draw,
+        loss=loss,
+    )
 
 
 def main():
@@ -98,7 +114,7 @@ def main():
             result = {"id": pos_id, "fen": fen}
 
             for name, engine in engines:
-                result[name] = analyze_position(engine, board, args.time_limit)
+                result[name] = asdict(analyze_position(engine, board, args.time_limit))
 
             print(json.dumps(result))
             sys.stdout.flush()
