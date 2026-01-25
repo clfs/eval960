@@ -8,6 +8,7 @@ import dataclasses
 import json
 import stockfish
 
+# Sample output from stockfish.get_top_moves(verbose=True):
 # [{'Move': 'a2a4', 'Centipawn': 26, 'Mate': None, 'Time': 1, 'Nodes': 11031, 'MultiPVNumber': 1, 'NodesPerSecond': 11031000, 'SelectiveDepth': 9, 'PVMoves': 'a2a4 a7a5 e2e4 f7f5 e4f5 g7g6', 'WDL': '68 921 11'}]
 
 DEPTH = 30
@@ -20,10 +21,7 @@ class TopMove:
     move: str
     centipawns: int | None
     mate: int | None
-    time: int
-    nodes: int
     multipv_number: int
-    nodes_per_second: int
     selective_depth: int
     pv_moves: list[str]
     win: int
@@ -35,12 +33,9 @@ class TopMove:
         win, draw, loss = map(int, info["WDL"].split())
         return cls(
             move=info["Move"],
-            centipawns=info["Centipawn"],
-            mate=info["Mate"],
-            time=info["Time"],
-            nodes=info["Nodes"],
+            centipawns=info.get("Centipawn"),
+            mate=info.get("Mate"),
             multipv_number=info["MultiPVNumber"],
-            nodes_per_second=info["NodesPerSecond"],
             selective_depth=info["SelectiveDepth"],
             pv_moves=info["PVMoves"].split(),
             win=win,
@@ -70,11 +65,12 @@ def main() -> None:
     for i, fen in enumerate(fens):
         engine.set_fen_position(fen)
         info = engine.get_top_moves(num_top_moves=5, verbose=True)
+        top_moves = [TopMove.from_stockfish(move) for move in info]
         result = Result(
             numbering=i,
             fen=fen,
             depth=DEPTH,
-            top_moves=[TopMove.from_stockfish(move) for move in info],
+            top_moves=top_moves,
         )
         print(json.dumps(dataclasses.asdict(result)))
 
