@@ -15,10 +15,9 @@ TIME_LIMIT = 0.5  # seconds per move/analysis
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Analyze FENs with Stockfish and Leela Chess Zero.")
+    parser = argparse.ArgumentParser(description="Analyze FENs with UCI chess engines.")
     parser.add_argument("filename", nargs="?", default="fens.txt", help="Path to the file containing FEN strings.")
-    parser.add_argument("--stockfish", required=True, help="Path to the Stockfish executable.")
-    parser.add_argument("--lc0", required=True, help="Path to the LC0 executable.")
+    parser.add_argument("--engine", action="append", required=True, help="Path to an engine executable. Can be provided multiple times.")
     args = parser.parse_args()
 
     filename = args.filename
@@ -31,61 +30,50 @@ def main():
         return
 
     # Initialize engines
-    try:
-        stockfish = chess.engine.SimpleEngine.popen_uci(args.stockfish)
-    except Exception as e:
-        print(json.dumps({"error": f"Failed to start Stockfish: {e}"}), file=sys.stderr)
-        return
-
-    lc0 = None
-    try:
-        lc0 = chess.engine.SimpleEngine.popen_uci(args.lc0)
-    except Exception as e:
-        print(json.dumps({"error": f"Failed to start LC0: {e}"}), file=sys.stderr)
-        stockfish.quit()
-        return
+    engines = []
+    for path in args.engine:
+        try:
+            engine = chess.engine.SimpleEngine.popen_uci(path)
+            # handle duplicate names
+            base_name = engine.id.get("name", "Unknown Engine")
+            name = base_name
+            count = 2
+            while any(e[0] == name for e in engines):
+                name = f"{base_name} {count}"
+                count += 1
+            engines.append((name, engine))
+        except Exception as e:
+            print(json.dumps({"error": f"Failed to start engine at {path}: {e}"}), file=sys.stderr)
+            for _, e in engines:
+                e.quit()
+            return
 
     try:
         for i, fen in enumerate(fens):
-            result = {"id": i, "fen": fen, "stockfish": None, "lc0": None}
+            result = {"id": i, "fen": fen}
 
             # Use chess960=True to be safe with FRC FENs
             board = chess.Board(fen, chess960=True)
 
-            # Analyze with Stockfish
-            try:
-                info_sf = stockfish.analyse(board, chess.engine.Limit(time=TIME_LIMIT))
-                score_sf = info_sf["score"].white()
-                result["stockfish"] = {
-                    "score_cp": score_sf.score(),
-                    "mate": score_sf.mate(),
-                    "depth": info_sf.get("depth"),
-                    "nodes": info_sf.get("nodes"),
-                }
-            except Exception as e:
-                result["stockfish"] = {"error": str(e)}
-
-            # Analyze with Leela
-            try:
-                info_lc0 = lc0.analyse(board, chess.engine.Limit(time=TIME_LIMIT))
-                score_lc0 = info_lc0["score"].white()
-                result["lc0"] = {
-                    "score_cp": score_lc0.score(),
-                    "mate": score_lc0.mate(),
-                    "depth": info_lc0.get("depth"),
-                    "nodes": info_lc0.get("nodes"),
-                }
-            except Exception as e:
-                result["lc0"] = {"error": str(e)}
+            for name, engine in engines:
+                try:
+                    info = engine.analyse(board, chess.engine.Limit(time=TIME_LIMIT))
+                    score = info["score"].white()
+                    result[name] = {
+                        "score_cp": score.score(),
+                        "mate": score.mate(),
+                        "depth": info.get("depth"),
+                        "nodes": info.get("nodes"),
+                    }
+                except Exception as e:
+                    result[name] = {"error": str(e)}
 
             print(json.dumps(result))
             sys.stdout.flush()
 
     finally:
-        if stockfish:
-            stockfish.quit()
-        if lc0:
-            lc0.quit()
+        for _, engine in engines:
+            engine.quit()
 
 
 if __name__ == "__main__":
