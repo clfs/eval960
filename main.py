@@ -37,7 +37,7 @@ def analyze_position(engine, board, time_limit):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Analyze FENs with UCI chess engines.")
+    parser = argparse.ArgumentParser(description="Analyze Chess960 FENs with UCI chess engines.")
     parser.add_argument(
         "filename",
         nargs="?",
