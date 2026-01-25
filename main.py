@@ -15,6 +15,30 @@ import chess.engine
 TIME_LIMIT = 0.5  # seconds per move/analysis
 
 
+def analyze_position(engine, board, time_limit):
+    try:
+        info = engine.analyse(board, chess.engine.Limit(time=time_limit))
+        score = info["score"].white()
+        wdl = info.get("wdl")
+
+        data = {
+            "score_cp": score.score(),
+            "mate": score.mate(),
+            "depth": info.get("depth"),
+            "nodes": info.get("nodes"),
+        }
+
+        if wdl:
+            wdl_white = wdl.white()
+            data["win"] = wdl_white.wins
+            data["draw"] = wdl_white.draws
+            data["loss"] = wdl_white.losses
+
+        return data
+    except Exception as e:
+        return {"error": str(e)}
+
+
 def main():
     parser = argparse.ArgumentParser(description="Analyze FENs with UCI chess engines.")
     parser.add_argument("filename", nargs="?", default="fens.txt", help="Path to the file containing FEN strings.")
@@ -59,27 +83,7 @@ def main():
             board = chess.Board(fen, chess960=True)
 
             for name, engine in engines:
-                try:
-                    info = engine.analyse(board, chess.engine.Limit(time=TIME_LIMIT))
-                    score = info["score"].white()
-                    wdl = info.get("wdl")
-                    
-                    data = {
-                        "score_cp": score.score(),
-                        "mate": score.mate(),
-                        "depth": info.get("depth"),
-                        "nodes": info.get("nodes"),
-                    }
-                    
-                    if wdl:
-                        wdl_white = wdl.white()
-                        data["win"] = wdl_white.wins
-                        data["draw"] = wdl_white.draws
-                        data["loss"] = wdl_white.losses
-
-                    result[name] = data
-                except Exception as e:
-                    result[name] = {"error": str(e)}
+                result[name] = analyze_position(engine, board, TIME_LIMIT)
 
             print(json.dumps(result))
             sys.stdout.flush()
