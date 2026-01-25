@@ -5,8 +5,10 @@
 # ]
 # ///
 import dataclasses
+import json
 import stockfish
 
+# [{'Move': 'a2a4', 'Centipawn': 26, 'Mate': None, 'Time': 1, 'Nodes': 11031, 'MultiPVNumber': 1, 'NodesPerSecond': 11031000, 'SelectiveDepth': 9, 'PVMoves': 'a2a4 a7a5 e2e4 f7f5 e4f5 g7g6', 'WDL': '68 921 11'}]
 
 DEPTH = 7
 
@@ -21,6 +23,21 @@ class Result:
     win: int
     draw: int
     loss: int
+
+    @classmethod
+    def from_stockfish(cls, numbering: int, fen: str, depth: int, info: dict) -> "Result":
+        win, draw, loss = map(int, info["WDL"].split())
+        return cls(
+            numbering=numbering,
+            fen=fen,
+            depth=depth,
+            best_move=info["Move"],
+            centipawns=info["Centipawn"],
+            principal_variation=info["PVMoves"].split(),
+            win=win,
+            draw=draw,
+            loss=loss,
+        )
 
 
 def main() -> None:
@@ -37,19 +54,7 @@ def main() -> None:
     for i, fen in enumerate(fens):
         engine.set_fen_position(fen)
         info = engine.get_top_moves(num_top_moves=1, verbose=True)
-        # [{'Move': 'a2a4', 'Centipawn': 26, 'Mate': None, 'Time': 1, 'Nodes': 11031, 'MultiPVNumber': 1, 'NodesPerSecond': 11031000, 'SelectiveDepth': 9, 'PVMoves': 'a2a4 a7a5 e2e4 f7f5 e4f5 g7g6', 'WDL': '68 921 11'}]
-        top_move = info[0]
-        result = Result(
-            numbering=i,
-            fen=fen,
-            depth=DEPTH,
-            best_move=top_move["Move"],
-            centipawns=top_move["Centipawn"],
-            principal_variation=top_move["PVMoves"].split(" "),
-            win=int(top_move["WDL"].split(" ")[0]),
-            draw=int(top_move["WDL"].split(" ")[1]),
-            loss=int(top_move["WDL"].split(" ")[2]),
-        )
+        result = Result.from_stockfish(i, fen, DEPTH, info[0])
         print(result)
 
 
