@@ -12,8 +12,6 @@ import argparse
 import chess
 import chess.engine
 
-TIME_LIMIT = 0.5  # seconds per move/analysis
-
 
 def analyze_position(engine, board, time_limit):
     info = engine.analyse(board, chess.engine.Limit(time=time_limit))
@@ -37,7 +35,9 @@ def analyze_position(engine, board, time_limit):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Analyze Chess960 FENs with UCI chess engines.")
+    parser = argparse.ArgumentParser(
+        description="Analyze Chess960 FENs with UCI chess engines."
+    )
     parser.add_argument(
         "filename",
         nargs="?",
@@ -49,6 +49,12 @@ def main():
         action="append",
         required=True,
         help="Path to an engine executable. Can be provided multiple times.",
+    )
+    parser.add_argument(
+        "--time-limit",
+        type=float,
+        default=0.5,
+        help="Time limit for analysis in seconds (default: 0.5).",
     )
     args = parser.parse_args()
 
@@ -90,7 +96,7 @@ def main():
             board = chess.Board(fen, chess960=True)
 
             for name, engine in engines:
-                result[name] = analyze_position(engine, board, TIME_LIMIT)
+                result[name] = analyze_position(engine, board, args.time_limit)
 
             print(json.dumps(result))
             sys.stdout.flush()
