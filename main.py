@@ -16,33 +16,40 @@ TIME_LIMIT = 0.5  # seconds per move/analysis
 
 
 def analyze_position(engine, board, time_limit):
-    try:
-        info = engine.analyse(board, chess.engine.Limit(time=time_limit))
-        score = info["score"].white()
-        wdl = info.get("wdl")
+    info = engine.analyse(board, chess.engine.Limit(time=time_limit))
+    score = info["score"].white()
+    wdl = info.get("wdl")
 
-        data = {
-            "score_cp": score.score(),
-            "mate": score.mate(),
-            "depth": info.get("depth"),
-            "nodes": info.get("nodes"),
-        }
+    data = {
+        "score_cp": score.score(),
+        "mate": score.mate(),
+        "depth": info.get("depth"),
+        "nodes": info.get("nodes"),
+    }
 
-        if wdl:
-            wdl_white = wdl.white()
-            data["win"] = wdl_white.wins
-            data["draw"] = wdl_white.draws
-            data["loss"] = wdl_white.losses
+    if wdl:
+        wdl_white = wdl.white()
+        data["win"] = wdl_white.wins
+        data["draw"] = wdl_white.draws
+        data["loss"] = wdl_white.losses
 
-        return data
-    except Exception as e:
-        return {"error": str(e)}
+    return data
 
 
 def main():
     parser = argparse.ArgumentParser(description="Analyze FENs with UCI chess engines.")
-    parser.add_argument("filename", nargs="?", default="fens.txt", help="Path to the file containing FEN strings.")
-    parser.add_argument("--engine", action="append", required=True, help="Path to an engine executable. Can be provided multiple times.")
+    parser.add_argument(
+        "filename",
+        nargs="?",
+        default="fens.txt",
+        help="Path to the file containing FEN strings.",
+    )
+    parser.add_argument(
+        "--engine",
+        action="append",
+        required=True,
+        help="Path to an engine executable. Can be provided multiple times.",
+    )
     args = parser.parse_args()
 
     filename = args.filename
