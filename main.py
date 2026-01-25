@@ -39,10 +39,11 @@ def main():
         description="Analyze Chess960 FENs with UCI chess engines."
     )
     parser.add_argument(
-        "filename",
-        nargs="?",
-        default="fens.txt",
-        help="Path to the file containing FEN strings.",
+        "--position",
+        type=int,
+        metavar="N",
+        default=None,
+        help="Specific Chess960 position ID to analyze (0-959). Default is to analyze all 960 positions.",
     )
     parser.add_argument(
         "--engine",
@@ -58,13 +59,13 @@ def main():
     )
     args = parser.parse_args()
 
-    filename = args.filename
-
-    if not os.path.exists(filename):
-        raise FileNotFoundError(f"{filename} not found")
-
-    with open(filename, "r") as f:
-        fens = [line.strip() for line in f if line.strip()]
+    # Determine which positions to analyze
+    if args.position is not None:
+        if not (0 <= args.position <= 959):
+            raise ValueError("Position ID must be between 0 and 959.")
+        positions = [args.position]
+    else:
+        positions = range(960)
 
     # Initialize engines
     engines = []
@@ -89,11 +90,12 @@ def main():
 
             engines.append((name, engine))
 
-        for i, fen in enumerate(fens):
-            result = {"id": i, "fen": fen}
+        for pos_id in positions:
+            board = chess.Board()
+            board.set_chess960_pos(pos_id)
+            fen = board.fen()
 
-            # Use chess960=True to be safe with FRC FENs
-            board = chess.Board(fen, chess960=True)
+            result = {"id": pos_id, "fen": fen}
 
             for name, engine in engines:
                 result[name] = analyze_position(engine, board, args.time_limit)
