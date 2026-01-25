@@ -47,6 +47,9 @@ def main():
                 engine.quit()
                 raise ValueError(f"Duplicate engine name: {name}")
 
+            if "UCI_ShowWDL" in engine.options:
+                engine.configure({"UCI_ShowWDL": True})
+
             engines.append((name, engine))
 
         for i, fen in enumerate(fens):
@@ -59,12 +62,22 @@ def main():
                 try:
                     info = engine.analyse(board, chess.engine.Limit(time=TIME_LIMIT))
                     score = info["score"].white()
-                    result[name] = {
+                    wdl = info.get("wdl")
+                    
+                    data = {
                         "score_cp": score.score(),
                         "mate": score.mate(),
                         "depth": info.get("depth"),
                         "nodes": info.get("nodes"),
                     }
+                    
+                    if wdl:
+                        wdl_white = wdl.white()
+                        data["win"] = wdl_white.wins
+                        data["draw"] = wdl_white.draws
+                        data["loss"] = wdl_white.losses
+
+                    result[name] = data
                 except Exception as e:
                     result[name] = {"error": str(e)}
 
