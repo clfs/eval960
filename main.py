@@ -26,7 +26,7 @@ def main():
         with open(filename, "r") as f:
             fens = [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
-        print(json.dumps({"error": f"{filename} not found"}), file=sys.stderr)
+        print(f"Error: {filename} not found", file=sys.stderr)
         return
 
     # Initialize engines
@@ -36,7 +36,7 @@ def main():
             engine = chess.engine.SimpleEngine.popen_uci(path)
             name = engine.id.get("name", "Unknown Engine")
             if any(e[0] == name for e in engines):
-                print(json.dumps({"error": f"Duplicate engine name: {name}"}), file=sys.stderr)
+                print(f"Error: Duplicate engine name: {name}", file=sys.stderr)
                 engine.quit()
                 for _, e in engines:
                     e.quit()
@@ -44,7 +44,7 @@ def main():
 
             engines.append((name, engine))
         except Exception as e:
-            print(json.dumps({"error": f"Failed to start engine at {path}: {e}"}), file=sys.stderr)
+            print(f"Error: Failed to start engine at {path}: {e}", file=sys.stderr)
             for _, e in engines:
                 e.quit()
             return
