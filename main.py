@@ -6,6 +6,7 @@
 # ///
 
 import sys
+import os
 import json
 import argparse
 import chess
@@ -22,34 +23,32 @@ def main():
 
     filename = args.filename
 
-    try:
-        with open(filename, "r") as f:
-            fens = [line.strip() for line in f if line.strip()]
-    except FileNotFoundError:
-        print(f"Error: {filename} not found", file=sys.stderr)
-        return
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f"{filename} not found")
+
+    with open(filename, "r") as f:
+        fens = [line.strip() for line in f if line.strip()]
 
     # Initialize engines
     engines = []
-    for path in args.engine:
-        try:
-            engine = chess.engine.SimpleEngine.popen_uci(path)
-            name = engine.id.get("name", "Unknown Engine")
-            if any(e[0] == name for e in engines):
-                print(f"Error: Duplicate engine name: {name}", file=sys.stderr)
+    try:
+        for path in args.engine:
+            try:
+                engine = chess.engine.SimpleEngine.popen_uci(path)
+            except Exception as e:
+                raise RuntimeError(f"Failed to start engine at {path}: {e}") from e
+
+            name = engine.id.get("name")
+            if not name:
                 engine.quit()
-                for _, e in engines:
-                    e.quit()
-                return
+                raise ValueError(f"Could not determine name for engine at {path}")
+
+            if any(e[0] == name for e in engines):
+                engine.quit()
+                raise ValueError(f"Duplicate engine name: {name}")
 
             engines.append((name, engine))
-        except Exception as e:
-            print(f"Error: Failed to start engine at {path}: {e}", file=sys.stderr)
-            for _, e in engines:
-                e.quit()
-            return
 
-    try:
         for i, fen in enumerate(fens):
             result = {"id": i, "fen": fen}
 
