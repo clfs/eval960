@@ -7,36 +7,39 @@
 
 import sys
 import json
+import argparse
 import chess
 import chess.engine
 
-STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
-LC0_PATH = "/opt/homebrew/bin/lc0"
 TIME_LIMIT = 0.5  # seconds per move/analysis
 
 
 def main():
-    filename = "fens.txt"
-    if len(sys.argv) > 1:
-        filename = sys.argv[1]
+    parser = argparse.ArgumentParser(description="Analyze FENs with Stockfish and Leela Chess Zero.")
+    parser.add_argument("filename", nargs="?", default="fens.txt", help="Path to the file containing FEN strings.")
+    parser.add_argument("--stockfish", required=True, help="Path to the Stockfish executable.")
+    parser.add_argument("--lc0", required=True, help="Path to the LC0 executable.")
+    args = parser.parse_args()
+
+    filename = args.filename
 
     try:
         with open(filename, "r") as f:
             fens = [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
-        print(json.dumps({"error": "fens.txt not found"}), file=sys.stderr)
+        print(json.dumps({"error": f"{filename} not found"}), file=sys.stderr)
         return
 
     # Initialize engines
     try:
-        stockfish = chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH)
+        stockfish = chess.engine.SimpleEngine.popen_uci(args.stockfish)
     except Exception as e:
         print(json.dumps({"error": f"Failed to start Stockfish: {e}"}), file=sys.stderr)
         return
 
     lc0 = None
     try:
-        lc0 = chess.engine.SimpleEngine.popen_uci(LC0_PATH)
+        lc0 = chess.engine.SimpleEngine.popen_uci(args.lc0)
     except Exception as e:
         print(json.dumps({"error": f"Failed to start LC0: {e}"}), file=sys.stderr)
         stockfish.quit()
