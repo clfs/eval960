@@ -34,13 +34,14 @@ def main():
     for path in args.engine:
         try:
             engine = chess.engine.SimpleEngine.popen_uci(path)
-            # handle duplicate names
-            base_name = engine.id.get("name", "Unknown Engine")
-            name = base_name
-            count = 2
-            while any(e[0] == name for e in engines):
-                name = f"{base_name} {count}"
-                count += 1
+            name = engine.id.get("name", "Unknown Engine")
+            if any(e[0] == name for e in engines):
+                print(json.dumps({"error": f"Duplicate engine name: {name}"}), file=sys.stderr)
+                engine.quit()
+                for _, e in engines:
+                    e.quit()
+                return
+
             engines.append((name, engine))
         except Exception as e:
             print(json.dumps({"error": f"Failed to start engine at {path}: {e}"}), file=sys.stderr)
