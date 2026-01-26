@@ -5,8 +5,6 @@
 # ]
 # ///
 
-import sys
-import os
 import json
 import argparse
 import chess
@@ -55,19 +53,14 @@ def main():
 
     positions = [args.position] if args.position is not None else range(960)
 
-    try:
-        stockfish = chess.engine.SimpleEngine.popen_uci(args.stockfish)
-    except Exception as e:
-        raise RuntimeError(f"Failed to start Stockfish at {args.stockfish}: {e}") from e
+    stockfish = chess.engine.SimpleEngine.popen_uci(args.stockfish)
 
     try:
-        name = stockfish.id.get("name")
-        if not name:
-            raise ValueError(f"Engine did not provide an 'id name' response.")
+        name = stockfish.id["name"]
         stockfish.configure({"UCI_ShowWDL": True})
 
-        for pos_id in positions:
-            board = chess.Board.from_chess960_pos(pos_id)
+        for n in positions:
+            board = chess.Board.from_chess960_pos(n)
             info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
 
             # The "string" key only contains the last "info string ..." message
@@ -76,7 +69,7 @@ def main():
             info.pop("string", None)
 
             result = {
-                "id": pos_id,
+                "id": n,
                 "fen": board.fen(),
                 "engine": name,
                 "info": info,
