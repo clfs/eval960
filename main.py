@@ -20,33 +20,27 @@ import chess.engine
 class AnalysisResult:
     score_cp: Optional[int]
     mate: Optional[int]
-    depth: Optional[int]
-    nodes: Optional[int]
-    win: Optional[int] = None
-    draw: Optional[int] = None
-    loss: Optional[int] = None
+    depth: int
+    nodes: int
+    win: int
+    draw: int
+    loss: int
 
 
 def analyze_position(engine, board, depth) -> AnalysisResult:
     info = engine.analyse(board, chess.engine.Limit(depth=depth))
     score = info["score"].white()
-    wdl = info.get("wdl")
-
-    win, draw, loss = None, None, None
-    if wdl:
-        wdl_white = wdl.white()
-        win = wdl_white.wins
-        draw = wdl_white.draws
-        loss = wdl_white.losses
+    wdl = info["wdl"]
+    wdl_white = wdl.white()
 
     return AnalysisResult(
         score_cp=score.score(),
         mate=score.mate(),
-        depth=info.get("depth"),
-        nodes=info.get("nodes"),
-        win=win,
-        draw=draw,
-        loss=loss,
+        depth=info["depth"],
+        nodes=info["nodes"],
+        win=wdl_white.wins,
+        draw=wdl_white.draws,
+        loss=wdl_white.losses,
     )
 
 
