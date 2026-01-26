@@ -55,18 +55,15 @@ def main():
 
     positions = [args.position] if args.position is not None else range(960)
 
-    stockfish = None
-    path = args.stockfish
     try:
-        stockfish = chess.engine.SimpleEngine.popen_uci(path)
+        stockfish = chess.engine.SimpleEngine.popen_uci(args.stockfish)
     except Exception as e:
-        raise RuntimeError(f"Failed to start Stockfish at {path}: {e}") from e
+        raise RuntimeError(f"Failed to start Stockfish at {args.stockfish}: {e}") from e
 
     try:
         name = stockfish.id.get("name")
         if not name:
-            raise ValueError(f"Could not determine name for Stockfish at {path}")
-
+            raise ValueError(f"Engine did not provide an 'id name' response.")
         stockfish.configure({"UCI_ShowWDL": True})
 
         for pos_id in positions:
@@ -90,7 +87,6 @@ def main():
 
             print(json.dumps(result, cls=ChessEncoder))
             sys.stdout.flush()
-
     finally:
         stockfish.quit()
 
