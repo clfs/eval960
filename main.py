@@ -13,10 +13,6 @@ import chess
 import chess.engine
 
 
-def analyze_position(engine, board, depth) -> chess.engine.InfoDict:
-    return engine.analyse(board, chess.engine.Limit(depth=depth))
-
-
 def main():
     parser = argparse.ArgumentParser(
         description="Analyze Chess960 FENs with Stockfish."
@@ -69,7 +65,7 @@ def main():
             board.set_chess960_pos(pos_id)
             fen = board.fen()
 
-            info = analyze_position(stockfish, board, args.depth)
+            info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
 
             result = {
                 "id": pos_id,
