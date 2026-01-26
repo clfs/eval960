@@ -9,39 +9,12 @@ import sys
 import os
 import json
 import argparse
-from dataclasses import dataclass, asdict
-from typing import Optional
-
 import chess
 import chess.engine
 
 
-@dataclass
-class AnalysisResult:
-    score_cp: Optional[int]
-    mate: Optional[int]
-    depth: int
-    nodes: int
-    win: int
-    draw: int
-    loss: int
-
-
-def analyze_position(engine, board, depth) -> AnalysisResult:
-    info = engine.analyse(board, chess.engine.Limit(depth=depth))
-    score = info["score"].white()
-    wdl = info["wdl"]
-    wdl_white = wdl.white()
-
-    return AnalysisResult(
-        score_cp=score.score(),
-        mate=score.mate(),
-        depth=info["depth"],
-        nodes=info["nodes"],
-        win=wdl_white.wins,
-        draw=wdl_white.draws,
-        loss=wdl_white.losses,
-    )
+def analyze_position(engine, board, depth) -> chess.engine.InfoDict:
+    return engine.analyse(board, chess.engine.Limit(depth=depth))
 
 
 def main():
@@ -96,8 +69,22 @@ def main():
             board.set_chess960_pos(pos_id)
             fen = board.fen()
 
-            analysis = asdict(analyze_position(stockfish, board, args.depth))
-            result = {"id": pos_id, "fen": fen, "engine": name, **analysis}
+            info = analyze_position(stockfish, board, args.depth)
+            score = info["score"].white()
+            wdl = info["wdl"].white()
+
+            result = {
+                "id": pos_id, 
+                "fen": fen, 
+                "engine": name,
+                "score_cp": score.score(),
+                "mate": score.mate(),
+                "depth": info["depth"],
+                "nodes": info["nodes"],
+                "win": wdl.wins,
+                "draw": wdl.draws,
+                "loss": wdl.losses,
+            }
 
             print(json.dumps(result))
             sys.stdout.flush()
