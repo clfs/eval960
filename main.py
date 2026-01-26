@@ -27,8 +27,8 @@ class AnalysisResult:
     loss: Optional[int] = None
 
 
-def analyze_position(engine, board, time_limit) -> AnalysisResult:
-    info = engine.analyse(board, chess.engine.Limit(time=time_limit))
+def analyze_position(engine, board, depth) -> AnalysisResult:
+    info = engine.analyse(board, chess.engine.Limit(depth=depth))
     score = info["score"].white()
     wdl = info.get("wdl")
 
@@ -67,10 +67,10 @@ def main():
         help="Path to an engine executable.",
     )
     parser.add_argument(
-        "--time-limit",
-        type=float,
-        default=0.5,
-        help="Time limit for analysis in seconds (default: 0.5).",
+        "--depth",
+        type=int,
+        default=20,
+        help="Depth limit for analysis (default: 20).",
     )
     args = parser.parse_args()
 
@@ -103,7 +103,7 @@ def main():
             board.set_chess960_pos(pos_id)
             fen = board.fen()
 
-            analysis = asdict(analyze_position(engine, board, args.time_limit))
+            analysis = asdict(analyze_position(engine, board, args.depth))
             result = {"id": pos_id, "fen": fen, "engine": name, **analysis}
 
             print(json.dumps(result))
