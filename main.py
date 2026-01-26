@@ -26,44 +26,49 @@ class ChessEncoder(json.JSONEncoder):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Analyze Chess960 FENs with Stockfish."
-    )
-    parser.add_argument(
-        "--position",
-        type=int,
-        metavar="N",
-        default=None,
-        help="Specific Chess960 position ID to analyze (0-959). Default is to analyze all 960 positions.",
+        description="Analyze all Chess960 starting positions with Stockfish."
     )
     parser.add_argument(
         "--stockfish",
+        type=str,
+        metavar="PATH",
         required=True,
         help="Path to the Stockfish executable.",
     )
     parser.add_argument(
-        "--depth",
+        "--id",
         type=int,
-        default=20,
-        help="Depth limit for analysis (default: 20).",
+        metavar="N",
+        default=None,
+        help="Only analyze the specified position (0-959).",
     )
     parser.add_argument(
         "--threads",
         type=int,
+        metavar="N",
         default=None,
-        help="Number of threads to use for analysis.",
+        help="Set custom number of threads to use.",
+    )
+    parser.add_argument(
+        "--depth",
+        type=int,
+        metavar="N",
+        default=20,
+        help="Set custom depth limit for analysis.",
     )
     parser.add_argument(
         "--hash",
         type=int,
+        metavar="N",
         default=None,
-        help="Hash size in MB.",
+        help="Set custom hash size in MB.",
     )
     args = parser.parse_args()
 
-    if args.position is not None and args.position not in range(960):
+    if args.id is not None and args.id not in range(960):
         parser.error("Position ID must be between 0 and 959.")
 
-    positions = [args.position] if args.position is not None else range(960)
+    ids = [args.id] if args.id is not None else range(960)
 
     with chess.engine.SimpleEngine.popen_uci(args.stockfish) as stockfish:
         name = stockfish.id["name"]
@@ -75,7 +80,7 @@ def main():
             options["Hash"] = args.hash
         stockfish.configure(options)
 
-        for n in positions:
+        for n in ids:
             board = chess.Board.from_chess960_pos(n)
             info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
 
