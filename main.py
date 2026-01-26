@@ -65,9 +65,7 @@ def main():
 
     positions = [args.position] if args.position is not None else range(960)
 
-    stockfish = chess.engine.SimpleEngine.popen_uci(args.stockfish)
-
-    try:
+    with chess.engine.SimpleEngine.popen_uci(args.stockfish) as stockfish:
         name = stockfish.id["name"]
 
         options = {"UCI_ShowWDL": True}
@@ -94,8 +92,6 @@ def main():
             }
 
             print(json.dumps(result, cls=ChessEncoder), flush=True)
-    finally:
-        stockfish.quit()
 
 
 if __name__ == "__main__":
