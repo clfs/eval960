@@ -68,8 +68,6 @@ def main():
 
         for pos_id in positions:
             board = chess.Board.from_chess960_pos(pos_id)
-            fen = board.fen()
-
             info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
 
             # The "string" key only contains the last "info string ..." message
@@ -79,7 +77,7 @@ def main():
 
             result = {
                 "id": pos_id,
-                "fen": fen,
+                "fen": board.fen(),
                 "engine": name,
                 "info": info,
             }
