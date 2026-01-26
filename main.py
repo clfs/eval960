@@ -26,7 +26,7 @@ class ChessEncoder(json.JSONEncoder):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Analyze all Chess960 starting positions with Stockfish."
+        description="Analyze Chess960 starting positions with Stockfish.",
     )
     parser.add_argument(
         "--stockfish",
