@@ -95,8 +95,7 @@ def main():
         if not name:
             raise ValueError(f"Could not determine name for Stockfish at {path}")
 
-        if "UCI_ShowWDL" in stockfish.options:
-            stockfish.configure({"UCI_ShowWDL": True})
+        stockfish.configure({"UCI_ShowWDL": True})
 
         for pos_id in positions:
             board = chess.Board()
