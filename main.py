@@ -67,8 +67,7 @@ def main():
         stockfish.configure({"UCI_ShowWDL": True})
 
         for pos_id in positions:
-            board = chess.Board()
-            board.set_chess960_pos(pos_id)
+            board = chess.Board.from_chess960_pos(pos_id)
             fen = board.fen()
 
             info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
