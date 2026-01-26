@@ -13,6 +13,19 @@ import chess
 import chess.engine
 
 
+class ChessEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, chess.engine.PovScore):
+            score = obj.white()
+            return {"cp": score.score(), "mate": score.mate()}
+        if isinstance(obj, chess.engine.PovWdl):
+            wdl = obj.white()
+            return {"win": wdl.wins, "draw": wdl.draws, "loss": wdl.losses}
+        if isinstance(obj, chess.Move):
+            return obj.uci()
+        return super().default(obj)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Analyze Chess960 FENs with Stockfish."
@@ -74,7 +87,7 @@ def main():
                 "info": info,
             }
 
-            print(json.dumps(result, default=str))
+            print(json.dumps(result, cls=ChessEncoder))
             sys.stdout.flush()
 
     finally:
