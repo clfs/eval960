@@ -66,35 +66,37 @@ def main():
     except Exception as e:
         raise RuntimeError(f"Failed to start Stockfish at {path}: {e}") from e
 
-    name = stockfish.id.get("name")
-    if not name:
-        raise ValueError(f"Could not determine name for Stockfish at {path}")
+    try:
+        name = stockfish.id.get("name")
+        if not name:
+            raise ValueError(f"Could not determine name for Stockfish at {path}")
 
-    stockfish.configure({"UCI_ShowWDL": True})
+        stockfish.configure({"UCI_ShowWDL": True})
 
-    for pos_id in positions:
-        board = chess.Board()
-        board.set_chess960_pos(pos_id)
-        fen = board.fen()
+        for pos_id in positions:
+            board = chess.Board()
+            board.set_chess960_pos(pos_id)
+            fen = board.fen()
 
-        info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
+            info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
 
-        # The "string" key only contains the last "info string ..." message
-        # from the engine, so drop it until the library provides a better
-        # way to capture all messages.
-        info.pop("string", None)
+            # The "string" key only contains the last "info string ..." message
+            # from the engine, so drop it until the library provides a better
+            # way to capture all messages.
+            info.pop("string", None)
 
-        result = {
-            "id": pos_id,
-            "fen": fen,
-            "engine": name,
-            "info": info,
-        }
+            result = {
+                "id": pos_id,
+                "fen": fen,
+                "engine": name,
+                "info": info,
+            }
 
-        print(json.dumps(result, cls=ChessEncoder))
-        sys.stdout.flush()
+            print(json.dumps(result, cls=ChessEncoder))
+            sys.stdout.flush()
 
-    stockfish.quit()
+    finally:
+        stockfish.quit()
 
 
 if __name__ == "__main__":
