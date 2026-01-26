@@ -52,7 +52,7 @@ def analyze_position(engine, board, depth) -> AnalysisResult:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Analyze Chess960 FENs with UCI chess engines."
+        description="Analyze Chess960 FENs with Stockfish."
     )
     parser.add_argument(
         "--position",
@@ -62,9 +62,9 @@ def main():
         help="Specific Chess960 position ID to analyze (0-959). Default is to analyze all 960 positions.",
     )
     parser.add_argument(
-        "--engine",
+        "--stockfish",
         required=True,
-        help="Path to an engine executable.",
+        help="Path to the Stockfish executable.",
     )
     parser.add_argument(
         "--depth",
@@ -82,36 +82,36 @@ def main():
     else:
         positions = range(960)
 
-    # Initialize engine
-    engine = None
-    path = args.engine
+    # Initialize Stockfish
+    stockfish = None
+    path = args.stockfish
     try:
         try:
-            engine = chess.engine.SimpleEngine.popen_uci(path)
+            stockfish = chess.engine.SimpleEngine.popen_uci(path)
         except Exception as e:
-            raise RuntimeError(f"Failed to start engine at {path}: {e}") from e
+            raise RuntimeError(f"Failed to start Stockfish at {path}: {e}") from e
 
-        name = engine.id.get("name")
+        name = stockfish.id.get("name")
         if not name:
-            raise ValueError(f"Could not determine name for engine at {path}")
+            raise ValueError(f"Could not determine name for Stockfish at {path}")
 
-        if "UCI_ShowWDL" in engine.options:
-            engine.configure({"UCI_ShowWDL": True})
+        if "UCI_ShowWDL" in stockfish.options:
+            stockfish.configure({"UCI_ShowWDL": True})
 
         for pos_id in positions:
             board = chess.Board()
             board.set_chess960_pos(pos_id)
             fen = board.fen()
 
-            analysis = asdict(analyze_position(engine, board, args.depth))
+            analysis = asdict(analyze_position(stockfish, board, args.depth))
             result = {"id": pos_id, "fen": fen, "engine": name, **analysis}
 
             print(json.dumps(result))
             sys.stdout.flush()
 
     finally:
-        if engine:
-            engine.quit()
+        if stockfish:
+            stockfish.quit()
 
 
 if __name__ == "__main__":
