@@ -50,15 +50,11 @@ def main():
     )
     args = parser.parse_args()
 
-    # Determine which positions to analyze
-    if args.position is not None:
-        if not (0 <= args.position <= 959):
-            raise ValueError("Position ID must be between 0 and 959.")
-        positions = [args.position]
-    else:
-        positions = range(960)
+    if args.position is not None and args.position not in range(960):
+        parser.error("Position ID must be between 0 and 959.")
 
-    # Initialize Stockfish
+    positions = [args.position] if args.position is not None else range(960)
+
     stockfish = None
     path = args.stockfish
     try:
