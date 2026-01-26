@@ -63,9 +63,8 @@ def main():
     )
     parser.add_argument(
         "--engine",
-        action="append",
         required=True,
-        help="Path to an engine executable. Can be provided multiple times.",
+        help="Path to an engine executable.",
     )
     parser.add_argument(
         "--time-limit",
@@ -83,44 +82,35 @@ def main():
     else:
         positions = range(960)
 
-    # Initialize engines
-    engines = []
+    # Initialize engine
+    engine = None
+    path = args.engine
     try:
-        for path in args.engine:
-            try:
-                engine = chess.engine.SimpleEngine.popen_uci(path)
-            except Exception as e:
-                raise RuntimeError(f"Failed to start engine at {path}: {e}") from e
+        try:
+            engine = chess.engine.SimpleEngine.popen_uci(path)
+        except Exception as e:
+            raise RuntimeError(f"Failed to start engine at {path}: {e}") from e
 
-            name = engine.id.get("name")
-            if not name:
-                engine.quit()
-                raise ValueError(f"Could not determine name for engine at {path}")
+        name = engine.id.get("name")
+        if not name:
+            raise ValueError(f"Could not determine name for engine at {path}")
 
-            if any(e[0] == name for e in engines):
-                engine.quit()
-                raise ValueError(f"Duplicate engine name: {name}")
-
-            if "UCI_ShowWDL" in engine.options:
-                engine.configure({"UCI_ShowWDL": True})
-
-            engines.append((name, engine))
+        if "UCI_ShowWDL" in engine.options:
+            engine.configure({"UCI_ShowWDL": True})
 
         for pos_id in positions:
             board = chess.Board()
             board.set_chess960_pos(pos_id)
             fen = board.fen()
 
-            result = {"id": pos_id, "fen": fen}
-
-            for name, engine in engines:
-                result[name] = asdict(analyze_position(engine, board, args.time_limit))
+            analysis = asdict(analyze_position(engine, board, args.time_limit))
+            result = {"id": pos_id, "fen": fen, "engine": name, **analysis}
 
             print(json.dumps(result))
             sys.stdout.flush()
 
     finally:
-        for _, engine in engines:
+        if engine:
             engine.quit()
 
 
