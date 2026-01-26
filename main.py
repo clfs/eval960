@@ -84,8 +84,7 @@ def main():
                 "info": info,
             }
 
-            print(json.dumps(result, cls=ChessEncoder))
-            sys.stdout.flush()
+            print(json.dumps(result, cls=ChessEncoder), flush=True)
     finally:
         stockfish.quit()
 
