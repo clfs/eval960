@@ -35,13 +35,21 @@ def main():
         required=True,
         help="Path to the Stockfish executable.",
     )
-    parser.add_argument(
+
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
         "--id",
         type=int,
-        metavar="N",
-        default=None,
-        help="Only analyze the specified position (0-959).",
+        action="append",
+        help="Specific position ID to analyze. Can be used multiple times.",
     )
+    group.add_argument(
+        "--range",
+        type=str,
+        metavar="START-END",
+        help="Range of position IDs to analyze (e.g. 5-10).",
+    )
+
     parser.add_argument(
         "--threads",
         type=int,
@@ -65,10 +73,25 @@ def main():
     )
     args = parser.parse_args()
 
-    if args.id is not None and args.id not in range(960):
-        parser.error("Position ID must be between 0 and 959.")
+    ids = set()
+    if args.id:
+        ids.update(args.id)
+    if args.range:
+        try:
+            start, end = map(int, args.range.split("-"))
+            if start > end:
+                raise ValueError
+            ids.update(range(start, end + 1))
+        except ValueError:
+            parser.error(f"Invalid value for --range: {args.range}")
 
-    ids = [args.id] if args.id is not None else range(960)
+    if not ids:
+        position_list = range(960)
+    else:
+        position_list = sorted(ids)
+
+    if any(i not in range(960) for i in position_list):
+        parser.error("Position IDs must be between 0 and 959.")
 
     with chess.engine.SimpleEngine.popen_uci(args.stockfish) as stockfish:
         name = stockfish.id["name"]
@@ -80,7 +103,7 @@ def main():
             options["Hash"] = args.hash
         stockfish.configure(options)
 
-        for n in ids:
+        for n in position_list:
             board = chess.Board.from_chess960_pos(n)
             info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
 
