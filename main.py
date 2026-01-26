@@ -46,6 +46,18 @@ def main():
         default=20,
         help="Depth limit for analysis (default: 20).",
     )
+    parser.add_argument(
+        "--threads",
+        type=int,
+        default=None,
+        help="Number of threads to use for analysis.",
+    )
+    parser.add_argument(
+        "--hash",
+        type=int,
+        default=None,
+        help="Hash size in MB.",
+    )
     args = parser.parse_args()
 
     if args.position is not None and args.position not in range(960):
@@ -57,7 +69,13 @@ def main():
 
     try:
         name = stockfish.id["name"]
-        stockfish.configure({"UCI_ShowWDL": True})
+
+        options = {"UCI_ShowWDL": True}
+        if args.threads:
+            options["Threads"] = args.threads
+        if args.hash:
+            options["Hash"] = args.hash
+        stockfish.configure(options)
 
         for n in positions:
             board = chess.Board.from_chess960_pos(n)
