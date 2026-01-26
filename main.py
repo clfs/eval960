@@ -12,6 +12,8 @@ import argparse
 import chess
 import chess.engine
 
+# {"id": 518, "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {"string": "NNUE evaluation using nn-37f18f62d772.nnue (6MiB, (22528, 128, 15, 32, 1))", "depth": 30, "seldepth": 44, "multipv": 1, "score": {"cp": 22, "mate": null}, "wdl": {"win": 59, "draw": 928, "loss": 13}, "nodes": 6090037, "nps": 531834, "hashfull": 983, "tbhits": 0, "time": 11.451, "pv": ["e2e4", "e7e5", "g1f3", "b8c6", "f1b5", "g8f6", "e1h1", "f6e4", "f1e1", "e4d6", "f3e5", "c6e5", "e1e5", "f8e7", "b5f1", "e8h8", "d2d4", "e7f6", "e5e1", "d6f5", "c2c3", "d7d5", "c1f4", "g7g6", "b1d2", "c7c6", "d2f3"]}}
+
 
 class ChessEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -79,6 +81,11 @@ def main():
             fen = board.fen()
 
             info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
+
+            # The "string" key only contains the last "info string ..." message
+            # from the engine, so drop it until the library provides a better
+            # way to capture all messages.
+            info.pop("string", None)
 
             result = {
                 "id": pos_id,
