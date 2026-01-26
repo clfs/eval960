@@ -70,23 +70,15 @@ def main():
             fen = board.fen()
 
             info = analyze_position(stockfish, board, args.depth)
-            score = info["score"].white()
-            wdl = info["wdl"].white()
 
             result = {
-                "id": pos_id, 
-                "fen": fen, 
+                "id": pos_id,
+                "fen": fen,
                 "engine": name,
-                "score_cp": score.score(),
-                "mate": score.mate(),
-                "depth": info["depth"],
-                "nodes": info["nodes"],
-                "win": wdl.wins,
-                "draw": wdl.draws,
-                "loss": wdl.losses,
+                "info": info,
             }
 
-            print(json.dumps(result))
+            print(json.dumps(result, default=str))
             sys.stdout.flush()
 
     finally:
