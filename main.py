@@ -16,8 +16,8 @@ class Row:
     depth: int
     seldepth: int
     multipv: int
-    score_cp: Optional[int]
-    score_mate: Optional[int]
+    score: Optional[int]
+    mate: Optional[int]
     wins: int
     draws: int
     losses: int
@@ -124,8 +124,8 @@ def main():
                     depth=entry["depth"],
                     seldepth=entry["seldepth"],
                     multipv=entry["multipv"],
-                    score_cp=entry["score"].white().score(),
-                    score_mate=entry["score"].white().mate(),
+                    score=entry["score"].white().score(),
+                    mate=entry["score"].white().mate(),
                     wins=entry["wdl"].white().wins,
                     draws=entry["wdl"].white().draws,
                     losses=entry["wdl"].white().losses,
