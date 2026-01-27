@@ -49,11 +49,11 @@ def main():
             reader = csv.DictReader(f)
 
             if reader.fieldnames is None:
-                raise ValueError(f"Error: {path} appears to be empty.")
+                raise ValueError(f"File {path} is empty.")
 
             if set(reader.fieldnames) != set(fieldnames):
                 raise ValueError(
-                    f"Error: Header mismatch in {path}. Expected {fieldnames}, got {reader.fieldnames}"
+                    f"Header mismatch in {path}. Expected {fieldnames}, got {reader.fieldnames}"
                 )
 
             for row in reader:
