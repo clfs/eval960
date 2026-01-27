@@ -8,7 +8,7 @@ import chess.engine
 
 
 @dataclasses.dataclass
-class Row:
+class Result:
     id: int
     fen: str
     engine: str
@@ -105,7 +105,7 @@ def main():
 
         limit = chess.engine.Limit(depth=args.depth)
 
-        fieldnames = [f.name for f in dataclasses.fields(Row)]
+        fieldnames = [f.name for f in dataclasses.fields(Result)]
         writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -117,7 +117,7 @@ def main():
                 info = [info]
 
             for entry in info:
-                row = Row(
+                result = Result(
                     id=n,
                     fen=board.fen(),
                     engine=name,
@@ -134,7 +134,7 @@ def main():
                     hashfull=entry["hashfull"],
                     pv=" ".join(move.uci() for move in entry["pv"]),
                 )
-                writer.writerow(dataclasses.asdict(row))
+                writer.writerow(dataclasses.asdict(result))
 
             sys.stdout.flush()
 
