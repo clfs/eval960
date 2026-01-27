@@ -53,6 +53,13 @@ def main():
     )
 
     parser.add_argument(
+        "--multipv",
+        type=int,
+        metavar="N",
+        default=1,
+        help="number of principal variations (default: 1)",
+    )
+    parser.add_argument(
         "--threads",
         type=int,
         metavar="N",
@@ -98,12 +105,16 @@ def main():
 
         for n in sorted(ids):
             board = chess.Board.from_chess960_pos(n)
-            info = stockfish.analyse(board, limit)
+            info = stockfish.analyse(board, limit, multipv=args.multipv)
 
             # The "string" key only contains the last "info string ..." message
             # from the engine, so drop it until the library provides a better
             # way to capture all messages.
-            info.pop("string", None)
+            if isinstance(info, list):
+                for i in info:
+                    i.pop("string", None)
+            else:
+                info.pop("string", None)
 
             result = {
                 "id": n,
