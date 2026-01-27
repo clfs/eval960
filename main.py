@@ -110,11 +110,8 @@ def main():
             # The "string" key only contains the last "info string ..." message
             # from the engine, so drop it until the library provides a better
             # way to capture all messages.
-            if isinstance(info, list):
-                for i in info:
-                    i.pop("string", None)
-            else:
-                info.pop("string", None)
+            for i in info:
+                i.pop("string", None)
 
             result = {
                 "id": n,
