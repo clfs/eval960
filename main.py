@@ -111,7 +111,6 @@ def main():
             for i in info:
                 i.pop("string", None)
                 i.pop("nps", None)
-                i.pop("hashfull", None)
                 i.pop("tbhits", None)
 
             result = {
