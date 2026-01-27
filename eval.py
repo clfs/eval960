@@ -25,6 +25,17 @@ class Result:
     hashfull: int
     pv: str
 
+    @property
+    def merge_key(self):
+        return (self.id, self.depth, self.multipv, self.engine)
+
+    def is_better_than(self, other: "Result") -> bool:
+        if self.seldepth != other.seldepth:
+            return self.seldepth > other.seldepth
+        if self.nodes != other.nodes:
+            return self.nodes > other.nodes
+        return self.time > other.time
+
 
 def main():
     parser = argparse.ArgumentParser(

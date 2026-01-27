@@ -59,19 +59,9 @@ def main():
 
             for row in reader:
                 result = parse_result(row)
-                key = (result.id, result.depth, result.multipv, result.engine)
+                key = result.merge_key
 
-                if key in results:
-                    existing = results[key]
-                    if result.seldepth > existing.seldepth:
-                        results[key] = result
-                    elif result.seldepth == existing.seldepth:
-                        if result.nodes > existing.nodes:
-                            results[key] = result
-                        elif result.nodes == existing.nodes:
-                            if result.time > existing.time:
-                                results[key] = result
-                else:
+                if key not in results or result.is_better_than(results[key]):
                     results[key] = result
 
     writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
