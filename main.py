@@ -1,14 +1,13 @@
-import csv
-import sys
 import argparse
-from dataclasses import dataclass, asdict, fields
-from typing import Optional
+import csv
+import dataclasses
+import sys
 
 import chess
 import chess.engine
 
 
-@dataclass
+@dataclasses.dataclass
 class Row:
     id: int
     fen: str
@@ -16,8 +15,8 @@ class Row:
     depth: int
     seldepth: int
     multipv: int
-    score: Optional[int]
-    mate: Optional[int]
+    score: int | None
+    mate: int | None
     wins: int
     draws: int
     losses: int
@@ -106,7 +105,8 @@ def main():
 
         limit = chess.engine.Limit(depth=args.depth)
 
-        writer = csv.DictWriter(sys.stdout, fieldnames=[f.name for f in fields(Row)])
+        fieldnames = [f.name for f in dataclasses.fields(Row)]
+        writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
         writer.writeheader()
 
         for n in sorted(ids):
@@ -134,7 +134,7 @@ def main():
                     hashfull=entry["hashfull"],
                     pv=" ".join(move.uci() for move in entry["pv"]),
                 )
-                writer.writerow(asdict(row))
+                writer.writerow(dataclasses.asdict(row))
 
             sys.stdout.flush()
 
