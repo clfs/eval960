@@ -32,5 +32,5 @@ Example:
 
 ```plaintext
 ; uv run main.py --stockfish $(which stockfish) --id 50 --depth 10
-{"id": 50, "fen": "bnnrqbkr/pppppppp/8/8/8/8/PPPPPPPP/BNNRQBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": [{"depth": 10, "seldepth": 14, "multipv": 1, "score": {"cp": 76, "mate": null}, "wdl": {"win": 298, "draw": 700, "loss": 2}, "nodes": 13759, "hashfull": 6, "time": 0.023, "pv": ["e2e4", "c7c5", "h2h4", "h7h5", "h1h3", "b7b6", "c2c4", "h8h6", "b2b3", "e7e5", "b1c3", "a7a6"]}]}
+{"id":50,"fen":"bnnrqbkr/pppppppp/8/8/8/8/PPPPPPPP/BNNRQBKR w KQkq - 0 1","engine":"Stockfish 17.1","info":[{"depth":10,"seldepth":14,"multipv":1,"score":{"cp":76,"mate":null},"wdl":{"win":298,"draw":700,"loss":2},"nodes":13759,"hashfull":6,"time":0.021,"pv":["e2e4","c7c5","h2h4","h7h5","h1h3","b7b6","c2c4","h8h6","b2b3","e7e5","b1c3","a7a6"]}]}
 ```
