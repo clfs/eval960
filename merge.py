@@ -71,8 +71,6 @@ def main():
         row = dataclasses.asdict(results[key])
         writer.writerow(row)
 
-    sys.stdout.flush()
-
 
 if __name__ == "__main__":
     main()
