@@ -63,11 +63,14 @@ def main():
 
                 if key in results:
                     existing = results[key]
-                    if result.nodes > existing.nodes:
+                    if result.seldepth > existing.seldepth:
                         results[key] = result
-                    elif result.nodes == existing.nodes:
-                        if result.time > existing.time:
+                    elif result.seldepth == existing.seldepth:
+                        if result.nodes > existing.nodes:
                             results[key] = result
+                        elif result.nodes == existing.nodes:
+                            if result.time > existing.time:
+                                results[key] = result
                 else:
                     results[key] = result
 
