@@ -106,6 +106,9 @@ def main():
                     # way to capture all messages.
                     info.pop("string", None)
 
+                    if not info:
+                        continue
+
                     result = {
                         "id": n,
                         "fen": board.fen(),
