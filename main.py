@@ -131,7 +131,7 @@ def main():
                     losses=entry["wdl"].white().losses,
                     nodes=entry["nodes"],
                     time=entry["time"],
-                    hashfull=entry.get("hashfull"),
+                    hashfull=entry["hashfull"],
                     pv=" ".join(move.uci() for move in entry["pv"]),
                 )
                 writer.writerow(asdict(row))
