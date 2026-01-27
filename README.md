@@ -31,10 +31,6 @@ If neither --id nor --range is provided, all 960 positions are analyzed.
 Example:
 
 ```plaintext
-; uv run main.py --stockfish $(which stockfish) --id 10 --depth 5
-{"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {"depth": 1, "seldepth": 2, "multipv": 1, "score": {"cp": 12, "mate": null}, "wdl": {"win": 43, "draw": 939, "loss": 18}, "nodes": 20, "nps": 20000, "hashfull": 0, "tbhits": 0, "time": 0.001, "pv": ["d2d4"]}}
-{"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {"depth": 2, "seldepth": 3, "multipv": 1, "score": {"cp": 27, "mate": null}, "wdl": {"win": 71, "draw": 918, "loss": 11}, "nodes": 45, "nps": 45000, "hashfull": 0, "tbhits": 0, "time": 0.001, "pv": ["d2d4"]}}
-{"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {"depth": 3, "seldepth": 4, "multipv": 1, "score": {"cp": 40, "mate": null}, "wdl": {"win": 107, "draw": 886, "loss": 7}, "nodes": 74, "nps": 74000, "hashfull": 0, "tbhits": 0, "time": 0.001, "pv": ["d2d4"]}}
-{"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {"depth": 4, "seldepth": 6, "multipv": 1, "score": {"cp": 41, "mate": null}, "wdl": {"win": 108, "draw": 885, "loss": 7}, "nodes": 127, "nps": 127000, "hashfull": 0, "tbhits": 0, "time": 0.001, "pv": ["d2d4", "b7b5", "e2e3"]}}
-{"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {"depth": 5, "seldepth": 6, "multipv": 1, "score": {"cp": 63, "mate": null}, "wdl": {"win": 209, "draw": 788, "loss": 3}, "nodes": 217, "nps": 217000, "hashfull": 0, "tbhits": 0, "time": 0.001, "pv": ["d2d4"]}}
+; uv run main.py --stockfish $(which stockfish) --id 50 --depth 10
+{"id": 50, "fen": "bnnrqbkr/pppppppp/8/8/8/8/PPPPPPPP/BNNRQBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {"depth": 10, "seldepth": 14, "multipv": 1, "score": {"cp": 76, "mate": null}, "wdl": {"win": 298, "draw": 700, "loss": 2}, "nodes": 13759, "nps": 598217, "hashfull": 6, "tbhits": 0, "time": 0.023, "pv": ["e2e4", "c7c5", "h2h4", "h7h5", "h1h3", "b7b6", "c2c4", "h8h6", "b2b3", "e7e5", "b1c3", "a7a6"]}}
 ```
