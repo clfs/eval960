@@ -94,23 +94,28 @@ def main():
             options["Hash"] = args.hash
         stockfish.configure(options)
 
+        limit = chess.engine.Limit(depth=args.depth)
+
         for n in sorted(ids):
             board = chess.Board.from_chess960_pos(n)
-            info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
+            with stockfish.analysis(board, limit) as analysis:
+                for info in analysis:
+                    # The "string" key only contains the last "info string ..." message
+                    # from the engine, so drop it until the library provides a better
+                    # way to capture all messages.
+                    info.pop("string", None)
 
-            # The "string" key only contains the last "info string ..." message
-            # from the engine, so drop it until the library provides a better
-            # way to capture all messages.
-            info.pop("string", None)
+                    if not info:
+                        continue
 
-            result = {
-                "id": n,
-                "fen": board.fen(),
-                "engine": name,
-                "info": info,
-            }
+                    result = {
+                        "id": n,
+                        "fen": board.fen(),
+                        "engine": name,
+                        "info": info,
+                    }
 
-            print(json.dumps(result, cls=ChessEncoder), flush=True)
+                    print(json.dumps(result, cls=ChessEncoder), flush=True)
 
 
 if __name__ == "__main__":
