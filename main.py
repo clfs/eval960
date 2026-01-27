@@ -94,7 +94,7 @@ def main():
             options["Hash"] = args.hash
         stockfish.configure(options)
 
-        for n in ids:
+        for n in sorted(ids):
             board = chess.Board.from_chess960_pos(n)
             info = stockfish.analyse(board, chess.engine.Limit(depth=args.depth))
 
