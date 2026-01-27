@@ -59,7 +59,7 @@ def main():
 
             for row in reader:
                 result = parse_result(row)
-                key = (result.id, result.depth, result.multipv)
+                key = (result.id, result.depth, result.multipv, result.engine)
 
                 if key in results:
                     existing = results[key]
