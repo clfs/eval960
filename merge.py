@@ -4,7 +4,7 @@ import csv
 import dataclasses
 import sys
 
-from main import Result
+from eval import Result
 
 
 def parse_result(d: dict) -> Result:
@@ -43,8 +43,7 @@ def main():
         parser.error("At least two files are required.")
 
     fieldnames = [f.name for f in dataclasses.fields(Result)]
-    writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
-    writer.writeheader()
+    results = {}
 
     for path in args.files:
         with open(path, newline="") as f:
@@ -59,7 +58,25 @@ def main():
                 )
 
             for row in reader:
-                writer.writerow(row)
+                result = parse_result(row)
+                key = (result.id, result.depth, result.multipv)
+
+                if key in results:
+                    existing = results[key]
+                    if result.nodes > existing.nodes:
+                        results[key] = result
+                    elif result.nodes == existing.nodes:
+                        if result.time > existing.time:
+                            results[key] = result
+                else:
+                    results[key] = result
+
+    writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
+    writer.writeheader()
+
+    for key in sorted(results.keys()):
+        row = dataclasses.asdict(results[key])
+        writer.writerow(row)
 
     sys.stdout.flush()
 
