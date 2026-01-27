@@ -13,13 +13,14 @@ class Row:
     id: int
     fen: str
     engine: str
+    depth: int
+    seldepth: int
     multipv: int
-    cp: Optional[int]
-    mate: Optional[int]
+    score_cp: Optional[int]
+    score_mate: Optional[int]
     wins: int
     draws: int
     losses: int
-    depth: int
     nodes: int
     time: int
     hashfull: int
@@ -121,12 +122,13 @@ def main():
                     fen=board.fen(),
                     engine=name,
                     multipv=entry["multipv"],
-                    cp=entry["score"].white().score(),
-                    mate=entry["score"].white().mate(),
+                    score_cp=entry["score"].white().score(),
+                    score_mate=entry["score"].white().mate(),
                     wins=entry["wdl"].white().wins,
                     draws=entry["wdl"].white().draws,
                     losses=entry["wdl"].white().losses,
                     depth=entry["depth"],
+                    seldepth=entry["seldepth"],
                     nodes=entry["nodes"],
                     time=entry["time"],
                     hashfull=entry.get("hashfull"),
