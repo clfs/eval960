@@ -57,9 +57,14 @@ def main():
                 )
 
             for row in reader:
-                result = parse_result(row)
-                key = result.merge_key
+                try:
+                    result = parse_result(row)
+                except Exception as e:
+                    raise ValueError(
+                        f"Invalid row {reader.line_num} in {path}: {e}"
+                    ) from e
 
+                key = result.merge_key
                 if key not in results or result.is_better_than(results[key]):
                     results[key] = result
 
