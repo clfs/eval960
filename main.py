@@ -1,27 +1,30 @@
-# /// script
-# requires-python = ">=3.11"
-# dependencies = [
-#     "python-chess",
-# ]
-# ///
-
-import json
+import csv
+import sys
 import argparse
+from dataclasses import dataclass, asdict, fields
+from typing import Optional
+
 import chess
 import chess.engine
 
 
-class ChessEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, chess.engine.PovScore):
-            score = obj.white()
-            return {"cp": score.score(), "mate": score.mate()}
-        if isinstance(obj, chess.engine.PovWdl):
-            wdl = obj.white()
-            return {"win": wdl.wins, "draw": wdl.draws, "loss": wdl.losses}
-        if isinstance(obj, chess.Move):
-            return obj.uci()
-        return super().default(obj)
+@dataclass
+class Row:
+    id: int
+    fen: str
+    engine: str
+    depth: int
+    seldepth: int
+    multipv: int
+    score: Optional[int]
+    mate: Optional[int]
+    wins: int
+    draws: int
+    losses: int
+    nodes: int
+    time: float
+    hashfull: int
+    pv: str
 
 
 def main():
@@ -103,27 +106,37 @@ def main():
 
         limit = chess.engine.Limit(depth=args.depth)
 
+        writer = csv.DictWriter(sys.stdout, fieldnames=[f.name for f in fields(Row)])
+        writer.writeheader()
+
         for n in sorted(ids):
             board = chess.Board.from_chess960_pos(n)
             info = stockfish.analyse(board, limit, multipv=args.multipv)
 
-            # Drop uninteresting fields.
-            for i in info:
-                i.pop("string", None)
-                i.pop("nps", None)
-                i.pop("tbhits", None)
-                i.pop("currmove", None)
-                i.pop("currmovenumber", None)
+            if isinstance(info, dict):
+                info = [info]
 
-            result = {
-                "id": n,
-                "fen": board.fen(),
-                "engine": name,
-                "info": info,
-            }
+            for entry in info:
+                row = Row(
+                    id=n,
+                    fen=board.fen(),
+                    engine=name,
+                    depth=entry["depth"],
+                    seldepth=entry["seldepth"],
+                    multipv=entry["multipv"],
+                    score=entry["score"].white().score(),
+                    mate=entry["score"].white().mate(),
+                    wins=entry["wdl"].white().wins,
+                    draws=entry["wdl"].white().draws,
+                    losses=entry["wdl"].white().losses,
+                    nodes=entry["nodes"],
+                    time=entry["time"],
+                    hashfull=entry["hashfull"],
+                    pv=" ".join(move.uci() for move in entry["pv"]),
+                )
+                writer.writerow(asdict(row))
 
-            j = json.dumps(result, cls=ChessEncoder, separators=(',', ':'))
-            print(j, flush=True)
+            sys.stdout.flush()
 
 
 if __name__ == "__main__":
