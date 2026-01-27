@@ -22,7 +22,7 @@ class Row:
     draws: int
     losses: int
     nodes: int
-    time: int
+    time: float
     hashfull: int
     pv: str
 
