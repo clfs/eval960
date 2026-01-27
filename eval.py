@@ -124,32 +124,31 @@ def main():
 
         for n in sorted(ids):
             board = chess.Board.from_chess960_pos(n)
-            info = stockfish.analyse(board, limit, multipv=args.multipv)
 
-            if isinstance(info, dict):
-                info = [info]
+            with stockfish.analysis(board, limit, multipv=args.multipv) as analysis:
+                for entry in analysis:
+                    if "score" not in entry:
+                        continue
 
-            for entry in info:
-                result = Result(
-                    id=n,
-                    fen=board.fen(),
-                    engine=name,
-                    depth=entry["depth"],
-                    seldepth=entry["seldepth"],
-                    multipv=entry["multipv"],
-                    score=entry["score"].white().score(),
-                    mate=entry["score"].white().mate(),
-                    wins=entry["wdl"].white().wins,
-                    draws=entry["wdl"].white().draws,
-                    losses=entry["wdl"].white().losses,
-                    nodes=entry["nodes"],
-                    time=entry["time"],
-                    hashfull=entry["hashfull"],
-                    pv=" ".join(move.uci() for move in entry["pv"]),
-                )
-                writer.writerow(dataclasses.asdict(result))
-
-            sys.stdout.flush()
+                    result = Result(
+                        id=n,
+                        fen=board.fen(),
+                        engine=name,
+                        depth=entry["depth"],
+                        seldepth=entry["seldepth"],
+                        multipv=entry["multipv"],
+                        score=entry["score"].white().score(),
+                        mate=entry["score"].white().mate(),
+                        wins=entry["wdl"].white().wins,
+                        draws=entry["wdl"].white().draws,
+                        losses=entry["wdl"].white().losses,
+                        nodes=entry["nodes"],
+                        time=entry["time"],
+                        hashfull=entry["hashfull"],
+                        pv=" ".join(move.uci() for move in entry["pv"]),
+                    )
+                    writer.writerow(dataclasses.asdict(result))
+                    sys.stdout.flush()
 
 
 if __name__ == "__main__":
