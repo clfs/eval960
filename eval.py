@@ -8,7 +8,7 @@ import chess.engine
 
 
 @dataclasses.dataclass
-class Row:
+class Result:
     id: int
     fen: str
     engine: str
@@ -24,6 +24,19 @@ class Row:
     time: float
     hashfull: int
     pv: str
+
+    @property
+    def merge_key(self):
+        return (self.id, self.depth, self.multipv, self.engine)
+
+    def is_better_than(self, other: "Result") -> bool:
+        if self.merge_key != other.merge_key:
+            return False
+        if self.seldepth != other.seldepth:
+            return self.seldepth > other.seldepth
+        if self.nodes != other.nodes:
+            return self.nodes > other.nodes
+        return self.time > other.time
 
 
 def main():
@@ -105,7 +118,7 @@ def main():
 
         limit = chess.engine.Limit(depth=args.depth)
 
-        fieldnames = [f.name for f in dataclasses.fields(Row)]
+        fieldnames = [f.name for f in dataclasses.fields(Result)]
         writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -117,7 +130,7 @@ def main():
                 info = [info]
 
             for entry in info:
-                row = Row(
+                result = Result(
                     id=n,
                     fen=board.fen(),
                     engine=name,
@@ -134,7 +147,7 @@ def main():
                     hashfull=entry["hashfull"],
                     pv=" ".join(move.uci() for move in entry["pv"]),
                 )
-                writer.writerow(dataclasses.asdict(row))
+                writer.writerow(dataclasses.asdict(result))
 
             sys.stdout.flush()
 
