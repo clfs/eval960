@@ -107,11 +107,12 @@ def main():
             board = chess.Board.from_chess960_pos(n)
             info = stockfish.analyse(board, limit, multipv=args.multipv)
 
-            # The "string" key only contains the last "info string ..." message
-            # from the engine, so drop it until the library provides a better
-            # way to capture all messages.
+            # Drop uninteresting fields.
             for i in info:
                 i.pop("string", None)
+                i.pop("nps", None)
+                i.pop("hashfull", None)
+                i.pop("tbhits", None)
 
             result = {
                 "id": n,
