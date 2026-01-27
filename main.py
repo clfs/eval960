@@ -84,7 +84,6 @@ def main():
     else:
         ids = set(range(960))
 
-
     with chess.engine.SimpleEngine.popen_uci(args.stockfish) as stockfish:
         name = stockfish.id["name"]
 
