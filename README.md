@@ -32,10 +32,6 @@ Example:
 
 ```plaintext
 ; uv run main.py --stockfish $(which stockfish) --id 10 --depth 5
-{"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {}}
-{"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {}}
-{"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {}}
-{"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {}}
 {"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {"depth": 1, "seldepth": 2, "multipv": 1, "score": {"cp": 12, "mate": null}, "wdl": {"win": 43, "draw": 939, "loss": 18}, "nodes": 20, "nps": 20000, "hashfull": 0, "tbhits": 0, "time": 0.001, "pv": ["d2d4"]}}
 {"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {"depth": 2, "seldepth": 3, "multipv": 1, "score": {"cp": 27, "mate": null}, "wdl": {"win": 71, "draw": 918, "loss": 11}, "nodes": 45, "nps": 45000, "hashfull": 0, "tbhits": 0, "time": 0.001, "pv": ["d2d4"]}}
 {"id": 10, "fen": "qnnrbbkr/pppppppp/8/8/8/8/PPPPPPPP/QNNRBBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "info": {"depth": 3, "seldepth": 4, "multipv": 1, "score": {"cp": 40, "mate": null}, "wdl": {"win": 107, "draw": 886, "loss": 7}, "nodes": 74, "nps": 74000, "hashfull": 0, "tbhits": 0, "time": 0.001, "pv": ["d2d4"]}}
