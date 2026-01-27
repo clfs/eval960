@@ -112,8 +112,8 @@ def main():
                 i.pop("string", None)
                 i.pop("nps", None)
                 i.pop("tbhits", None)
-                # i.pop("currmove", None)
-                # i.pop("currmovenumber", None)
+                i.pop("currmove", None)
+                i.pop("currmovenumber", None)
 
             result = {
                 "id": n,
