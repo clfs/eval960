@@ -1,10 +1,3 @@
-# /// script
-# requires-python = ">=3.11"
-# dependencies = [
-#     "python-chess",
-# ]
-# ///
-
 import json
 import argparse
 import chess
