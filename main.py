@@ -1,8 +1,29 @@
 import csv
 import sys
 import argparse
+from dataclasses import dataclass, asdict, fields
+from typing import Optional
+
 import chess
 import chess.engine
+
+
+@dataclass
+class Row:
+    id: int
+    fen: str
+    engine: str
+    multipv: int
+    cp: Optional[int]
+    mate: Optional[int]
+    wins: int
+    draws: int
+    losses: int
+    depth: int
+    nodes: int
+    time: int
+    hashfull: int
+    pv: str
 
 
 def main():
@@ -84,23 +105,7 @@ def main():
 
         limit = chess.engine.Limit(depth=args.depth)
 
-        fieldnames = [
-            "id",
-            "fen",
-            "engine",
-            "multipv",
-            "cp",
-            "mate",
-            "wins",
-            "draws",
-            "losses",
-            "depth",
-            "nodes",
-            "time",
-            "hashfull",
-            "pv",
-        ]
-        writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
+        writer = csv.DictWriter(sys.stdout, fieldnames=[f.name for f in fields(Row)])
         writer.writeheader()
 
         for n in sorted(ids):
@@ -111,24 +116,23 @@ def main():
                 info = [info]
 
             for entry in info:
-                row = {
-                    "id": n,
-                    "fen": board.fen(),
-                    "engine": name,
-                    "multipv": entry["multipv"],
-                    "depth": entry["depth"],
-                    "nodes": entry["nodes"],
-                    "time": entry["time"],
-                    "hashfull": entry["hashfull"],
-                    "cp": entry["score"].white().score(),
-                    "mate": entry["score"].white().mate(),
-                    "wins": entry["wdl"].white().wins,
-                    "draws": entry["wdl"].white().draws,
-                    "losses": entry["wdl"].white().losses,
-                    "pv": " ".join(move.uci() for move in entry["pv"]),
-                }
-
-                writer.writerow(row)
+                row = Row(
+                    id=n,
+                    fen=board.fen(),
+                    engine=name,
+                    multipv=entry["multipv"],
+                    cp=entry["score"].white().score(),
+                    mate=entry["score"].white().mate(),
+                    wins=entry["wdl"].white().wins,
+                    draws=entry["wdl"].white().draws,
+                    losses=entry["wdl"].white().losses,
+                    depth=entry["depth"],
+                    nodes=entry["nodes"],
+                    time=entry["time"],
+                    hashfull=entry.get("hashfull"),
+                    pv=" ".join(move.uci() for move in entry["pv"]),
+                )
+                writer.writerow(asdict(row))
 
             sys.stdout.flush()
 
