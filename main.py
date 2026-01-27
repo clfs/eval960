@@ -122,7 +122,8 @@ def main():
                 "info": info,
             }
 
-            print(json.dumps(result, cls=ChessEncoder), flush=True)
+            j = json.dumps(result, cls=ChessEncoder, separators=(',', ':'))
+            print(j, flush=True)
 
 
 if __name__ == "__main__":
