@@ -30,6 +30,8 @@ class Result:
         return (self.id, self.depth, self.multipv, self.engine)
 
     def is_better_than(self, other: "Result") -> bool:
+        if self.merge_key != other.merge_key:
+            return False
         if self.seldepth != other.seldepth:
             return self.seldepth > other.seldepth
         if self.nodes != other.nodes:
