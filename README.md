@@ -46,6 +46,19 @@ options:
   -h, --help  show this help message and exit
 ```
 
+```plaintext
+; uv run to-csv.py -h
+usage: to-csv.py [-h] FILE
+
+Convert a JSONL analysis to CSV.
+
+positional arguments:
+  FILE        a .jsonl file
+
+options:
+  -h, --help  show this help message and exit
+```
+
 ## Examples
 
 Analyze positions 20 through 25:
@@ -64,4 +77,10 @@ Compact multiple analysis files:
 
 ```plaintext
 ; uv run compact.py x.jsonl y.jsonl > z.jsonl
+```
+
+Convert an analysis file to CSV:
+
+```plaintext
+; uv run to-csv.py z.jsonl > z.csv
 ```
