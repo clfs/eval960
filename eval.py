@@ -8,8 +8,10 @@ import chess.engine
 
 
 @dataclasses.dataclass
-class Variation:
-    multipv: int
+class Result:
+    id: int
+    fen: str
+    engine: str
     move: str
     score: int | None
     mate: int | None
@@ -18,17 +20,9 @@ class Variation:
     losses: int
     depth: int
     seldepth: int
-
-
-@dataclasses.dataclass
-class Result:
-    id: int
-    fen: str
-    engine: str
     nodes: int
     time: float
     hashfull: int
-    variations: list[Variation]
 
 
 def main():
@@ -60,20 +54,6 @@ def main():
     )
 
     parser.add_argument(
-        "--multipv",
-        type=int,
-        metavar="N",
-        default=1,
-        help="number of principal variations (default: 1)",
-    )
-    parser.add_argument(
-        "--threads",
-        type=int,
-        metavar="N",
-        default=1,
-        help="set custom number of threads to use (default: 1)",
-    )
-    parser.add_argument(
         "--nodes",
         type=int,
         metavar="N",
@@ -81,11 +61,18 @@ def main():
         help="set soft node limit for analysis (default: 100000)",
     )
     parser.add_argument(
+        "--threads",
+        type=int,
+        metavar="N",
+        default=1,
+        help="set number of threads to use (default: 1)",
+    )
+    parser.add_argument(
         "--hash",
         type=int,
         metavar="N",
         default=1024,
-        help="set custom hash size in MB (default: 1024)",
+        help="set hash size in MB (default: 1024)",
     )
     args = parser.parse_args()
 
@@ -109,34 +96,25 @@ def main():
 
         for n in sorted(ids):
             board = chess.Board.from_chess960_pos(n)
-            info = stockfish.analyse(board, limit, multipv=args.multipv)
-
-            variations = []
-            for d in info:
-                variations.append(
-                    Variation(
-                        multipv=d["multipv"],
-                        move=d["pv"][0].uci(),
-                        score=d["score"].white().score(),
-                        mate=d["score"].white().mate(),
-                        wins=d["wdl"].white().wins,
-                        draws=d["wdl"].white().draws,
-                        losses=d["wdl"].white().losses,
-                        depth=d["depth"],
-                        seldepth=d["seldepth"],
-                    )
-                )
+            info = stockfish.analyse(board, limit)
 
             result = Result(
                 id=n,
                 fen=board.fen(),
                 engine=name,
-                nodes=info[0]["nodes"],
-                time=info[0]["time"],
-                hashfull=info[0]["hashfull"],
-                variations=variations,
+                move=info["pv"][0].uci(),
+                score=info["score"].white().score(),
+                mate=info["score"].white().mate(),
+                wins=info["wdl"].white().wins,
+                draws=info["wdl"].white().draws,
+                losses=info["wdl"].white().losses,
+                depth=info["depth"],
+                seldepth=info["seldepth"],
+                nodes=info["nodes"],
+                time=info["time"],
+                hashfull=info["hashfull"],
             )
-            print(json.dumps(dataclasses.asdict(result)))
+            print(json.dumps(dataclasses.asdict(result), separators=(",", ":")))
             sys.stdout.flush()
 
 
