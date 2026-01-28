@@ -69,11 +69,11 @@ def main():
         help="set custom number of threads to use",
     )
     parser.add_argument(
-        "--depth",
+        "--nodes",
         type=int,
         metavar="N",
-        default=20,
-        help="set custom depth limit for analysis",
+        default=100000,
+        help="set soft node limit for analysis (default: 100000)",
     )
     parser.add_argument(
         "--hash",
@@ -103,7 +103,7 @@ def main():
             options["Hash"] = args.hash
         stockfish.configure(options)
 
-        limit = chess.engine.Limit(depth=args.depth)
+        limit = chess.engine.Limit(nodes=args.nodes)
 
         fieldnames = [f.name for f in dataclasses.fields(Result)]
         writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
