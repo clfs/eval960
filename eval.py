@@ -73,7 +73,7 @@ def main():
         type=int,
         metavar="N",
         default=100000,
-        help="set custom nodes limit for analysis",
+        help="set soft node limit for analysis (default: 100000)",
     )
     parser.add_argument(
         "--hash",
