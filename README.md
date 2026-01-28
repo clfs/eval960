@@ -39,7 +39,7 @@ usage: compact.py [-h] FILE [FILE ...]
 Output the best analysis for each position-engine pair.
 
 positional arguments:
-  FILE        one or more .jsonl files
+  FILE        one or more .csv files
 
 options:
   -h, --help  show this help message and exit
@@ -51,16 +51,17 @@ Analyze positions 20 through 25:
 
 ```plaintext
 ; uv run eval.py --stockfish $(which stockfish) --range 20-25
-{"id":20,"fen":"nbbqnrkr/pppppppp/8/8/8/8/PPPPPPPP/NBBQNRKR w KQkq - 0 1","engine":"Stockfish 17.1","move":"c2c4","score":22,"mate":null,"wins":60,"draws":927,"losses":13,"depth":16,"seldepth":22,"nodes":100055,"time":0.184,"hashfull":0}
-{"id":21,"fen":"nqbbnrkr/pppppppp/8/8/8/8/PPPPPPPP/NQBBNRKR w KQkq - 0 1","engine":"Stockfish 17.1","move":"h2h4","score":22,"mate":null,"wins":58,"draws":929,"losses":13,"depth":17,"seldepth":25,"nodes":100087,"time":0.169,"hashfull":0}
-{"id":22,"fen":"nqbnrbkr/pppppppp/8/8/8/8/PPPPPPPP/NQBNRBKR w KQkq - 0 1","engine":"Stockfish 17.1","move":"d2d4","score":35,"mate":null,"wins":91,"draws":901,"losses":8,"depth":17,"seldepth":20,"nodes":100039,"time":0.169,"hashfull":0}
-{"id":23,"fen":"nqbnrkrb/pppppppp/8/8/8/8/PPPPPPPP/NQBNRKRB w KQkq - 0 1","engine":"Stockfish 17.1","move":"f1g1","score":24,"mate":null,"wins":62,"draws":926,"losses":12,"depth":14,"seldepth":25,"nodes":100028,"time":0.19,"hashfull":0}
-{"id":24,"fen":"nbqnbrkr/pppppppp/8/8/8/8/PPPPPPPP/NBQNBRKR w KQkq - 0 1","engine":"Stockfish 17.1","move":"d2d4","score":76,"mate":null,"wins":299,"draws":699,"losses":2,"depth":16,"seldepth":22,"nodes":100012,"time":0.174,"hashfull":0}
-{"id":25,"fen":"nqnbbrkr/pppppppp/8/8/8/8/PPPPPPPP/NQNBBRKR w KQkq - 0 1","engine":"Stockfish 17.1","move":"d2d4","score":38,"mate":null,"wins":99,"draws":894,"losses":7,"depth":16,"seldepth":22,"nodes":100052,"time":0.188,"hashfull":1}
+id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
+20,nbbqnrkr/pppppppp/8/8/8/8/PPPPPPPP/NBBQNRKR w KQkq - 0 1,Stockfish 17.1,c2c4,22,60,927,13,16,22,100055,0.185,0
+21,nqbbnrkr/pppppppp/8/8/8/8/PPPPPPPP/NQBBNRKR w KQkq - 0 1,Stockfish 17.1,h2h4,22,58,929,13,17,25,100087,0.173,0
+22,nqbnrbkr/pppppppp/8/8/8/8/PPPPPPPP/NQBNRBKR w KQkq - 0 1,Stockfish 17.1,d2d4,35,91,901,8,17,20,100039,0.179,0
+23,nqbnrkrb/pppppppp/8/8/8/8/PPPPPPPP/NQBNRKRB w KQkq - 0 1,Stockfish 17.1,f1g1,24,62,926,12,14,25,100028,0.196,0
+24,nbqnbrkr/pppppppp/8/8/8/8/PPPPPPPP/NBQNBRKR w KQkq - 0 1,Stockfish 17.1,d2d4,76,299,699,2,16,22,100012,0.18,0
+25,nqnbbrkr/pppppppp/8/8/8/8/PPPPPPPP/NQNBBRKR w KQkq - 0 1,Stockfish 17.1,d2d4,38,99,894,7,16,22,100052,0.193,1
 ```
 
 Compact multiple analysis files:
 
 ```plaintext
-; uv run compact.py x.jsonl y.jsonl > z.jsonl
+; uv run compact.py x.csv y.csv > z.csv
 ```
