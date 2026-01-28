@@ -32,7 +32,7 @@ def main():
                 best[key] = entry
 
     for k in sorted(best.keys()):
-        print(json.dumps(best[k], separators=(",", ":")))
+        print(json.dumps(best[k]))
 
 
 if __name__ == "__main__":

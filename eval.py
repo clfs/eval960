@@ -10,6 +10,7 @@ import chess.engine
 @dataclasses.dataclass
 class Variation:
     multipv: int
+    move: str
     score: int | None
     mate: int | None
     wins: int
@@ -17,7 +18,6 @@ class Variation:
     losses: int
     depth: int
     seldepth: int
-    pv: str
 
 
 @dataclasses.dataclass
@@ -116,6 +116,7 @@ def main():
                 variations.append(
                     Variation(
                         multipv=d["multipv"],
+                        move=d["pv"][0].uci(),
                         score=d["score"].white().score(),
                         mate=d["score"].white().mate(),
                         wins=d["wdl"].white().wins,
@@ -123,7 +124,6 @@ def main():
                         losses=d["wdl"].white().losses,
                         depth=d["depth"],
                         seldepth=d["seldepth"],
-                        pv=" ".join(move.uci() for move in d["pv"]),
                     )
                 )
 
@@ -136,7 +136,7 @@ def main():
                 hashfull=info[0]["hashfull"],
                 variations=variations,
             )
-            print(json.dumps(dataclasses.asdict(result), separators=(",", ":")))
+            print(json.dumps(dataclasses.asdict(result)))
             sys.stdout.flush()
 
 

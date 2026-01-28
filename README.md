@@ -52,12 +52,12 @@ Analyze positions 20 through 25:
 
 ```plaintext
 ; uv run eval.py --stockfish $(which stockfish) --range 20-25
-{"id":20,"fen":"nbbqnrkr/pppppppp/8/8/8/8/PPPPPPPP/NBBQNRKR w KQkq - 0 1","engine":"Stockfish 17.1","nodes":100055,"time":0.184,"hashfull":0,"variations":[{"multipv":1,"score":22,"mate":null,"wins":60,"draws":927,"losses":13,"depth":16,"seldepth":22,"pv":"c2c4 c7c5 h2h4 h7h5 a1b3 d7d6 d2d4 c5d4 b3d4 a8b6 d1c2 d8c7 b2b3 d6d5 d4b5 c7c6 e1f3 d5c4"}]}
-{"id":21,"fen":"nqbbnrkr/pppppppp/8/8/8/8/PPPPPPPP/NQBBNRKR w KQkq - 0 1","engine":"Stockfish 17.1","nodes":100087,"time":0.17,"hashfull":0,"variations":[{"multipv":1,"score":22,"mate":null,"wins":58,"draws":929,"losses":13,"depth":17,"seldepth":25,"pv":"h2h4 h7h5 c2c4 c7c6 d2d4 d7d5 e1f3 d5c4 b2b3 c4c3 e2e4 d8b6 b3b4 b8d6 a1c2 a8c7"}]}
-{"id":22,"fen":"nqbnrbkr/pppppppp/8/8/8/8/PPPPPPPP/NQBNRBKR w KQkq - 0 1","engine":"Stockfish 17.1","nodes":100039,"time":0.168,"hashfull":0,"variations":[{"multipv":1,"score":35,"mate":null,"wins":91,"draws":901,"losses":8,"depth":17,"seldepth":20,"pv":"d2d4 d7d5"}]}
-{"id":23,"fen":"nqbnrkrb/pppppppp/8/8/8/8/PPPPPPPP/NQBNRKRB w KQkq - 0 1","engine":"Stockfish 17.1","nodes":100028,"time":0.19,"hashfull":0,"variations":[{"multipv":1,"score":24,"mate":null,"wins":62,"draws":926,"losses":12,"depth":14,"seldepth":25,"pv":"f1g1"}]}
-{"id":24,"fen":"nbqnbrkr/pppppppp/8/8/8/8/PPPPPPPP/NBQNBRKR w KQkq - 0 1","engine":"Stockfish 17.1","nodes":100012,"time":0.177,"hashfull":0,"variations":[{"multipv":1,"score":76,"mate":null,"wins":299,"draws":699,"losses":2,"depth":16,"seldepth":22,"pv":"d2d4 d7d5"}]}
-{"id":25,"fen":"nqnbbrkr/pppppppp/8/8/8/8/PPPPPPPP/NQNBBRKR w KQkq - 0 1","engine":"Stockfish 17.1","nodes":100052,"time":0.187,"hashfull":1,"variations":[{"multipv":1,"score":38,"mate":null,"wins":99,"draws":894,"losses":7,"depth":16,"seldepth":22,"pv":"d2d4 d7d5"}]}
+{"id": 20, "fen": "nbbqnrkr/pppppppp/8/8/8/8/PPPPPPPP/NBBQNRKR w KQkq - 0 1", "engine": "Stockfish 17.1", "nodes": 100055, "time": 0.177, "hashfull": 0, "variations": [{"multipv": 1, "move": "c2c4", "score": 22, "mate": null, "wins": 60, "draws": 927, "losses": 13, "depth": 16, "seldepth": 22}]}
+{"id": 21, "fen": "nqbbnrkr/pppppppp/8/8/8/8/PPPPPPPP/NQBBNRKR w KQkq - 0 1", "engine": "Stockfish 17.1", "nodes": 100087, "time": 0.163, "hashfull": 0, "variations": [{"multipv": 1, "move": "h2h4", "score": 22, "mate": null, "wins": 58, "draws": 929, "losses": 13, "depth": 17, "seldepth": 25}]}
+{"id": 22, "fen": "nqbnrbkr/pppppppp/8/8/8/8/PPPPPPPP/NQBNRBKR w KQkq - 0 1", "engine": "Stockfish 17.1", "nodes": 100039, "time": 0.16, "hashfull": 0, "variations": [{"multipv": 1, "move": "d2d4", "score": 35, "mate": null, "wins": 91, "draws": 901, "losses": 8, "depth": 17, "seldepth": 20}]}
+{"id": 23, "fen": "nqbnrkrb/pppppppp/8/8/8/8/PPPPPPPP/NQBNRKRB w KQkq - 0 1", "engine": "Stockfish 17.1", "nodes": 100028, "time": 0.174, "hashfull": 0, "variations": [{"multipv": 1, "move": "f1g1", "score": 24, "mate": null, "wins": 62, "draws": 926, "losses": 12, "depth": 14, "seldepth": 25}]}
+{"id": 24, "fen": "nbqnbrkr/pppppppp/8/8/8/8/PPPPPPPP/NBQNBRKR w KQkq - 0 1", "engine": "Stockfish 17.1", "nodes": 100012, "time": 0.164, "hashfull": 0, "variations": [{"multipv": 1, "move": "d2d4", "score": 76, "mate": null, "wins": 299, "draws": 699, "losses": 2, "depth": 16, "seldepth": 22}]}
+{"id": 25, "fen": "nqnbbrkr/pppppppp/8/8/8/8/PPPPPPPP/NQNBBRKR w KQkq - 0 1", "engine": "Stockfish 17.1", "nodes": 100052, "time": 0.174, "hashfull": 1, "variations": [{"multipv": 1, "move": "d2d4", "score": 38, "mate": null, "wins": 99, "draws": 894, "losses": 7, "depth": 16, "seldepth": 22}]}
 ```
 
 Compact multiple analysis files:
