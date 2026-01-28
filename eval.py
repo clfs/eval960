@@ -25,19 +25,6 @@ class Result:
     hashfull: int
     pv: str
 
-    @property
-    def merge_key(self):
-        return (self.id, self.depth, self.multipv, self.engine)
-
-    def is_better_than(self, other: "Result") -> bool:
-        if self.merge_key != other.merge_key:
-            return False
-        if self.seldepth != other.seldepth:
-            return self.seldepth > other.seldepth
-        if self.nodes != other.nodes:
-            return self.nodes > other.nodes
-        return self.time > other.time
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -126,9 +113,19 @@ def main():
             board = chess.Board.from_chess960_pos(n)
 
             with stockfish.analysis(board, limit, multipv=args.multipv) as analysis:
+                current_depth = 0
+                pending_results = {}
+
                 for entry in analysis:
                     if "score" not in entry:
                         continue
+
+                    if entry["depth"] > current_depth:
+                        for mpv in sorted(pending_results):
+                            writer.writerow(dataclasses.asdict(pending_results[mpv]))
+                        sys.stdout.flush()
+                        pending_results.clear()
+                        current_depth = entry["depth"]
 
                     result = Result(
                         id=n,
@@ -147,8 +144,11 @@ def main():
                         hashfull=entry["hashfull"],
                         pv=" ".join(move.uci() for move in entry["pv"]),
                     )
-                    writer.writerow(dataclasses.asdict(result))
-                    sys.stdout.flush()
+                    pending_results[result.multipv] = result
+
+                for mpv in sorted(pending_results):
+                    writer.writerow(dataclasses.asdict(pending_results[mpv]))
+                sys.stdout.flush()
 
 
 if __name__ == "__main__":
