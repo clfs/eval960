@@ -1,9 +1,5 @@
 import argparse
 import json
-import sys
-import typing
-
-# {"id":742,"fen":"rkbnnbqr/pppppppp/8/8/8/8/PPPPPPPP/RKBNNBQR w KQkq - 0 1","engine":"Stockfish 17.1","nodes":100070,"time":0.172,"hashfull":0,"variations":[{"multipv":1,"score":35,"mate":null,"wins":90,"draws":902,"losses":8,"depth":17,"seldepth":17,"pv":"d2d4 d7d5"}]}
 
 
 def main():
