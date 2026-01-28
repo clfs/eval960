@@ -5,7 +5,7 @@ Stockfish evaluations for all Chess960 positions.
 Requirements:
 
 ```plaintext
-; brew install uv stockfish xan
+; brew install uv stockfish
 ```
 
 - [uv](https://github.com/astral-sh/uv)
