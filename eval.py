@@ -1,6 +1,6 @@
 import argparse
-import csv
 import dataclasses
+import json
 import sys
 
 import chess
@@ -8,22 +8,27 @@ import chess.engine
 
 
 @dataclasses.dataclass
-class Result:
-    id: int
-    fen: str
-    engine: str
-    depth: int
-    seldepth: int
+class Variation:
     multipv: int
     score: int | None
     mate: int | None
     wins: int
     draws: int
     losses: int
+    depth: int
+    seldepth: int
+    pv: str
+
+
+@dataclasses.dataclass
+class Result:
+    id: int
+    fen: str
+    engine: str
     nodes: int
     time: float
     hashfull: int
-    pv: str
+    variations: list[Variation]
 
 
 def main():
@@ -65,8 +70,8 @@ def main():
         "--threads",
         type=int,
         metavar="N",
-        default=None,
-        help="set custom number of threads to use",
+        default=1,
+        help="set custom number of threads to use (default: 1)",
     )
     parser.add_argument(
         "--nodes",
@@ -79,8 +84,8 @@ def main():
         "--hash",
         type=int,
         metavar="N",
-        default=None,
-        help="set custom hash size in MB",
+        default=1024,
+        help="set custom hash size in MB (default: 1024)",
     )
     args = parser.parse_args()
 
@@ -96,59 +101,43 @@ def main():
     with chess.engine.SimpleEngine.popen_uci(args.stockfish) as stockfish:
         name = stockfish.id["name"]
 
-        options = {"UCI_ShowWDL": True}
-        if args.threads:
-            options["Threads"] = args.threads
-        if args.hash:
-            options["Hash"] = args.hash
-        stockfish.configure(options)
+        stockfish.configure(
+            {"UCI_ShowWDL": True, "Threads": args.threads, "Hash": args.hash}
+        )
 
         limit = chess.engine.Limit(nodes=args.nodes)
 
-        fieldnames = [f.name for f in dataclasses.fields(Result)]
-        writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
-        writer.writeheader()
-
         for n in sorted(ids):
             board = chess.Board.from_chess960_pos(n)
+            info = stockfish.analyse(board, limit, multipv=args.multipv)
 
-            with stockfish.analysis(board, limit, multipv=args.multipv) as analysis:
-                current_depth = 0
-                pending_results = {}
-
-                for entry in analysis:
-                    if "score" not in entry:
-                        continue
-
-                    if entry["depth"] > current_depth:
-                        for mpv in sorted(pending_results):
-                            writer.writerow(dataclasses.asdict(pending_results[mpv]))
-                        sys.stdout.flush()
-                        pending_results.clear()
-                        current_depth = entry["depth"]
-
-                    result = Result(
-                        id=n,
-                        fen=board.fen(),
-                        engine=name,
-                        depth=entry["depth"],
-                        seldepth=entry["seldepth"],
-                        multipv=entry["multipv"],
-                        score=entry["score"].white().score(),
-                        mate=entry["score"].white().mate(),
-                        wins=entry["wdl"].white().wins,
-                        draws=entry["wdl"].white().draws,
-                        losses=entry["wdl"].white().losses,
-                        nodes=entry["nodes"],
-                        time=entry["time"],
-                        hashfull=entry["hashfull"],
-                        pv=" ".join(move.uci() for move in entry["pv"]),
+            variations = []
+            for d in info:
+                variations.append(
+                    Variation(
+                        multipv=d["multipv"],
+                        score=d["score"].white().score(),
+                        mate=d["score"].white().mate(),
+                        wins=d["wdl"].white().wins,
+                        draws=d["wdl"].white().draws,
+                        losses=d["wdl"].white().losses,
+                        depth=d["depth"],
+                        seldepth=d["seldepth"],
+                        pv=" ".join(move.uci() for move in d["pv"]),
                     )
-                    pending_results[result.multipv] = result
+                )
 
-                for mpv in sorted(pending_results):
-                    writer.writerow(dataclasses.asdict(pending_results[mpv]))
-                sys.stdout.flush()
+            result = Result(
+                id=n,
+                fen=board.fen(),
+                engine=name,
+                nodes=info[0]["nodes"],
+                time=info[0]["time"],
+                hashfull=info[0]["hashfull"],
+                variations=variations,
+            )
+            print(json.dumps(dataclasses.asdict(result), separators=(",", ":")))
+            sys.stdout.flush()
 
 
 if __name__ == "__main__":
