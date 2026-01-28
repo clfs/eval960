@@ -13,8 +13,7 @@ class Result:
     fen: str
     engine: str
     move: str
-    score: int | None
-    mate: int | None
+    score: int
     wins: int
     draws: int
     losses: int
@@ -108,7 +107,6 @@ def main():
                 engine=name,
                 move=info["pv"][0].uci(),
                 score=info["score"].white().score(),
-                mate=info["score"].white().mate(),
                 wins=info["wdl"].white().wins,
                 draws=info["wdl"].white().draws,
                 losses=info["wdl"].white().losses,
