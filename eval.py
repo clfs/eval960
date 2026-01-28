@@ -54,13 +54,6 @@ def main():
     )
 
     parser.add_argument(
-        "--threads",
-        type=int,
-        metavar="N",
-        default=1,
-        help="set custom number of threads to use (default: 1)",
-    )
-    parser.add_argument(
         "--nodes",
         type=int,
         metavar="N",
@@ -68,11 +61,18 @@ def main():
         help="set soft node limit for analysis (default: 100000)",
     )
     parser.add_argument(
+        "--threads",
+        type=int,
+        metavar="N",
+        default=1,
+        help="set number of threads to use (default: 1)",
+    )
+    parser.add_argument(
         "--hash",
         type=int,
         metavar="N",
         default=1024,
-        help="set custom hash size in MB (default: 1024)",
+        help="set hash size in MB (default: 1024)",
     )
     args = parser.parse_args()
 
