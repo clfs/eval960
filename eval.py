@@ -114,7 +114,7 @@ def main():
                 time=info["time"],
                 hashfull=info["hashfull"],
             )
-            print(json.dumps(dataclasses.asdict(result)))
+            print(json.dumps(dataclasses.asdict(result), separators=(",", ":")))
             sys.stdout.flush()
 
 
