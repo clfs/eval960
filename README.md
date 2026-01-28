@@ -65,3 +65,9 @@ Compact multiple analysis files:
 ```plaintext
 ; uv run compact.py x.jsonl y.jsonl > z.jsonl
 ```
+
+Convert an analysis file to CSV:
+
+```plaintext
+; uv run to-csv.py z.jsonl > z.csv
+```
