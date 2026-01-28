@@ -35,7 +35,7 @@ If neither --id nor --range is provided, all 960 positions are analyzed.
 Example:
 
 ```plaintext
-; uv run eval.py --stockfish $(which stockfish) --id 742 --depth 10        
+; uv run eval.py --stockfish $(which stockfish) --id 742 --depth 10
 id,fen,engine,depth,seldepth,multipv,score,mate,wins,draws,losses,nodes,time,hashfull,pv
 742,rkbnnbqr/pppppppp/8/8/8/8/PPPPPPPP/RKBNNBQR w KQkq - 0 1,Stockfish 17.1,1,2,1,12,,43,939,18,20,0.001,0,e2e4
 742,rkbnnbqr/pppppppp/8/8/8/8/PPPPPPPP/RKBNNBQR w KQkq - 0 1,Stockfish 17.1,2,3,1,35,,89,903,8,45,0.001,0,e2e4
