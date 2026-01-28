@@ -70,8 +70,8 @@ def main():
         "--threads",
         type=int,
         metavar="N",
-        default=None,
-        help="set custom number of threads to use",
+        default=1,
+        help="set custom number of threads to use (default: 1)",
     )
     parser.add_argument(
         "--nodes",
@@ -84,8 +84,8 @@ def main():
         "--hash",
         type=int,
         metavar="N",
-        default=None,
-        help="set custom hash size in MB",
+        default=1024,
+        help="set custom hash size in MB (default: 1024)",
     )
     args = parser.parse_args()
 
@@ -101,12 +101,9 @@ def main():
     with chess.engine.SimpleEngine.popen_uci(args.stockfish) as stockfish:
         name = stockfish.id["name"]
 
-        options = {"UCI_ShowWDL": True}
-        if args.threads:
-            options["Threads"] = args.threads
-        if args.hash:
-            options["Hash"] = args.hash
-        stockfish.configure(options)
+        stockfish.configure(
+            {"UCI_ShowWDL": True, "Threads": args.threads, "Hash": args.hash}
+        )
 
         limit = chess.engine.Limit(nodes=args.nodes)
 
