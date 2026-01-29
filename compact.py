@@ -22,7 +22,7 @@ def main():
     fieldnames = [f.name for f in dataclasses.fields(Result)]
 
     for path in args.files:
-        with open(path, "r", newline="") as f:
+        with open(path, "r") as f:
             reader = csv.DictReader(f)
             for entry in reader:
                 # Convert numeric fields for correct sorting/comparison.

@@ -89,7 +89,7 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 87,nnbrkrqb/pppppppp/8/8/8/8/PPPPPPPP/NNBRKRQB w KQkq - 0 1,Stockfish 17.1,f2f4,55,167,829,4,10,18,100288,0.017,1
 88,nbnrbkrq/pppppppp/8/8/8/8/PPPPPPPP/NBNRBKRQ w KQkq - 0 1,Stockfish 17.1,c2c4,47,131,864,5,12,17,100252,0.016,2
 89,nnrbbkrq/pppppppp/8/8/8/8/PPPPPPPP/NNRBBKRQ w KQkq - 0 1,Stockfish 17.1,g2g4,33,84,907,9,10,14,100842,0.017,1
-90,nnrkbbrq/pppppppp/8/8/8/8/PPPPPPPP/NNRKBBRQ w KQkq - 0 1,Stockfish 17.1,g2g4,63,212,785,3,11,18,101035,0.018,1
+90,nnrkbbrq/pppppppp/8/8/8/8/PPPPPPPP/NNRKBBRQ w KQkq - 0 1,Stockfish 17.1,g2g4,27,70,919,11,36,38,100005863,24.077,538
 91,nnrkbrqb/pppppppp/8/8/8/8/PPPPPPPP/NNRKBRQB w KQkq - 0 1,Stockfish 17.1,g2g4,49,141,854,5,12,17,100839,0.019,1
 92,nbnrkrbq/pppppppp/8/8/8/8/PPPPPPPP/NBNRKRBQ w KQkq - 0 1,Stockfish 17.1,f2f4,28,71,918,11,10,19,100759,0.018,1
 93,nnrbkrbq/pppppppp/8/8/8/8/PPPPPPPP/NNRBKRBQ w KQkq - 0 1,Stockfish 17.1,f2f4,47,133,862,5,10,16,100955,0.019,1
@@ -171,7 +171,7 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 169,nrnbbkqr/pppppppp/8/8/8/8/PPPPPPPP/NRNBBKQR w KQkq - 0 1,Stockfish 17.1,d2d3,32,83,908,9,11,24,100283,0.019,3
 170,nrnkbbqr/pppppppp/8/8/8/8/PPPPPPPP/NRNKBBQR w KQkq - 0 1,Stockfish 17.1,e2e4,63,212,785,3,11,17,100816,0.018,1
 171,nrnkbqrb/pppppppp/8/8/8/8/PPPPPPPP/NRNKBQRB w KQkq - 0 1,Stockfish 17.1,g2g4,23,61,927,12,10,19,100350,0.019,2
-172,nbrnkqbr/pppppppp/8/8/8/8/PPPPPPPP/NBRNKQBR w KQkq - 0 1,Stockfish 17.1,f2f4,10,40,941,19,11,18,100261,0.018,2
+172,nbrnkqbr/pppppppp/8/8/8/8/PPPPPPPP/NBRNKQBR w KQkq - 0 1,Stockfish 17.1,f2f4,15,46,937,17,31,48,100001381,23.516,533
 173,nrnbkqbr/pppppppp/8/8/8/8/PPPPPPPP/NRNBKQBR w KQkq - 0 1,Stockfish 17.1,f2f4,30,77,913,10,11,20,100313,0.02,2
 174,nrnkqbbr/pppppppp/8/8/8/8/PPPPPPPP/NRNKQBBR w KQkq - 0 1,Stockfish 17.1,e2e4,37,97,895,8,11,18,101124,0.019,2
 175,nrnkqrbb/pppppppp/8/8/8/8/PPPPPPPP/NRNKQRBB w KQkq - 0 1,Stockfish 17.1,f2f4,63,211,786,3,11,15,100576,0.018,2
@@ -235,7 +235,7 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 233,nrqbbknr/pppppppp/8/8/8/8/PPPPPPPP/NRQBBKNR w KQkq - 0 1,Stockfish 17.1,b2b4,31,80,911,9,10,15,100722,0.017,3
 234,nrqkbbnr/pppppppp/8/8/8/8/PPPPPPPP/NRQKBBNR w KQkq - 0 1,Stockfish 17.1,e2e4,83,355,644,1,11,18,100548,0.019,3
 235,nrqkbnrb/pppppppp/8/8/8/8/PPPPPPPP/NRQKBNRB w KQkq - 0 1,Stockfish 17.1,c2c4,33,84,907,9,11,15,100065,0.021,3
-236,nbrqknbr/pppppppp/8/8/8/8/PPPPPPPP/NBRQKNBR w KQkq - 0 1,Stockfish 17.1,c2c4,37,96,896,8,12,17,100490,0.017,2
+236,nbrqknbr/pppppppp/8/8/8/8/PPPPPPPP/NBRQKNBR w KQkq - 0 1,Stockfish 17.1,c2c4,49,140,855,5,32,55,100004697,23.498,550
 237,nrqbknbr/pppppppp/8/8/8/8/PPPPPPPP/NRQBKNBR w KQkq - 0 1,Stockfish 17.1,f2f4,48,136,859,5,10,16,100623,0.019,4
 238,nrqknbbr/pppppppp/8/8/8/8/PPPPPPPP/NRQKNBBR w KQkq - 0 1,Stockfish 17.1,c2c4,41,108,885,7,9,19,100312,0.016,2
 239,nrqknrbb/pppppppp/8/8/8/8/PPPPPPPP/NRQKNRBB w KQkq - 0 1,Stockfish 17.1,f2f4,59,190,807,3,11,19,100107,0.017,2
@@ -264,7 +264,7 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 262,nrbknbqr/pppppppp/8/8/8/8/PPPPPPPP/NRBKNBQR w KQkq - 0 1,Stockfish 17.1,a1b3,57,179,817,4,10,16,100085,0.019,2
 263,nrbknqrb/pppppppp/8/8/8/8/PPPPPPPP/NRBKNQRB w KQkq - 0 1,Stockfish 17.1,g2g4,72,271,727,2,12,19,100648,0.018,3
 264,nbrkbnqr/pppppppp/8/8/8/8/PPPPPPPP/NBRKBNQR w KQkq - 0 1,Stockfish 17.1,c2c4,31,80,911,9,10,18,100450,0.02,4
-265,nrkbbnqr/pppppppp/8/8/8/8/PPPPPPPP/NRKBBNQR w KQkq - 0 1,Stockfish 17.1,e2e4,44,121,873,6,11,13,100414,0.019,3
+265,nrkbbnqr/pppppppp/8/8/8/8/PPPPPPPP/NRKBBNQR w KQkq - 0 1,Stockfish 17.1,e2e4,30,78,912,10,33,39,100003961,24.375,573
 266,nrknbbqr/pppppppp/8/8/8/8/PPPPPPPP/NRKNBBQR w KQkq - 0 1,Stockfish 17.1,d1c3,35,91,901,8,11,20,100674,0.019,3
 267,nrknbqrb/pppppppp/8/8/8/8/PPPPPPPP/NRKNBQRB w KQkq - 0 1,Stockfish 17.1,g2g4,40,107,886,7,11,15,100100,0.02,4
 268,nbrknqbr/pppppppp/8/8/8/8/PPPPPPPP/NBRKNQBR w KQkq - 0 1,Stockfish 17.1,c2c4,40,107,886,7,11,17,100089,0.019,3
@@ -391,7 +391,7 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 389,qrbbnnkr/pppppppp/8/8/8/8/PPPPPPPP/QRBBNNKR w KQkq - 0 1,Stockfish 17.1,h2h4,36,92,900,8,11,17,100046,0.019,8
 390,qrbnnbkr/pppppppp/8/8/8/8/PPPPPPPP/QRBNNBKR w KQkq - 0 1,Stockfish 17.1,h2h4,28,72,918,10,13,16,100499,0.018,5
 391,qrbnnkrb/pppppppp/8/8/8/8/PPPPPPPP/QRBNNKRB w KQkq - 0 1,Stockfish 17.1,b2b4,14,45,938,17,9,19,100225,0.019,4
-392,qbrnbnkr/pppppppp/8/8/8/8/PPPPPPPP/QBRNBNKR w KQkq - 0 1,Stockfish 17.1,d2d4,53,159,837,4,11,16,100056,0.019,5
+392,qbrnbnkr/pppppppp/8/8/8/8/PPPPPPPP/QBRNBNKR w KQkq - 0 1,Stockfish 17.1,d1e3,44,122,872,6,30,39,100003061,24.953,535
 393,qrnbbnkr/pppppppp/8/8/8/8/PPPPPPPP/QRNBBNKR w KQkq - 0 1,Stockfish 17.1,h2h4,25,65,923,12,11,20,100116,0.017,5
 394,qrnnbbkr/pppppppp/8/8/8/8/PPPPPPPP/QRNNBBKR w KQkq - 0 1,Stockfish 17.1,c2c4,30,76,914,10,13,15,100289,0.018,5
 395,qrnnbkrb/pppppppp/8/8/8/8/PPPPPPPP/QRNNBKRB w KQkq - 0 1,Stockfish 17.1,d2d3,31,78,912,10,11,14,100204,0.021,6
@@ -494,7 +494,7 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 492,qbrnknbr/pppppppp/8/8/8/8/PPPPPPPP/QBRNKNBR w KQkq - 0 1,Stockfish 17.1,f2f3,22,60,927,13,10,16,100158,0.017,6
 493,qrnbknbr/pppppppp/8/8/8/8/PPPPPPPP/QRNBKNBR w KQkq - 0 1,Stockfish 17.1,f2f3,41,109,884,7,12,17,100098,0.016,7
 494,qrnknbbr/pppppppp/8/8/8/8/PPPPPPPP/QRNKNBBR w KQkq - 0 1,Stockfish 17.1,e2e4,25,65,923,12,12,22,100272,0.016,5
-495,qrnknrbb/pppppppp/8/8/8/8/PPPPPPPP/QRNKNRBB w KQkq - 0 1,Stockfish 17.1,b2b3,56,173,823,4,11,15,100562,0.018,3
+495,qrnknrbb/pppppppp/8/8/8/8/PPPPPPPP/QRNKNRBB w KQkq - 0 1,Stockfish 17.1,f2f4,28,71,918,11,34,43,100000412,23.601,535
 496,bbrqnknr/pppppppp/8/8/8/8/PPPPPPPP/BBRQNKNR w KQkq - 0 1,Stockfish 17.1,b2b4,28,71,918,11,12,21,100282,0.019,5
 497,brqbnknr/pppppppp/8/8/8/8/PPPPPPPP/BRQBNKNR w KQkq - 0 1,Stockfish 17.1,b2b4,9,38,942,20,10,21,100879,0.017,6
 498,brqnkbnr/pppppppp/8/8/8/8/PPPPPPPP/BRQNKBNR w KQkq - 0 1,Stockfish 17.1,b2b4,9,38,942,20,12,17,100925,0.017,5
@@ -517,7 +517,7 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 515,brnqknrb/pppppppp/8/8/8/8/PPPPPPPP/BRNQKNRB w KQkq - 0 1,Stockfish 17.1,b2b3,11,41,940,19,11,14,100582,0.019,5
 516,rbbnqknr/pppppppp/8/8/8/8/PPPPPPPP/RBBNQKNR w KQkq - 0 1,Stockfish 17.1,e2e4,51,150,845,5,11,17,100091,0.021,6
 517,rnbbqknr/pppppppp/8/8/8/8/PPPPPPPP/RNBBQKNR w KQkq - 0 1,Stockfish 17.1,e2e4,42,113,881,6,11,19,101860,0.018,10
-518,rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1,Stockfish 17.1,e2e4,40,107,886,7,11,16,101301,0.019,6
+518,rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1,Stockfish 17.1,d2d4,23,60,927,13,36,52,100000586,24.692,520
 519,rnbqknrb/pppppppp/8/8/8/8/PPPPPPPP/RNBQKNRB w KQkq - 0 1,Stockfish 17.1,d2d4,50,146,849,5,11,16,100203,0.016,5
 520,rbnqbknr/pppppppp/8/8/8/8/PPPPPPPP/RBNQBKNR w KQkq - 0 1,Stockfish 17.1,c2c4,33,84,907,9,12,16,100336,0.02,6
 521,rnqbbknr/pppppppp/8/8/8/8/PPPPPPPP/RNQBBKNR w KQkq - 0 1,Stockfish 17.1,d2d4,30,77,913,10,10,19,100070,0.017,8
@@ -550,7 +550,7 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 548,rbbnknqr/pppppppp/8/8/8/8/PPPPPPPP/RBBNKNQR w KQkq - 0 1,Stockfish 17.1,d2d4,13,43,939,18,11,15,100648,0.016,7
 549,rnbbknqr/pppppppp/8/8/8/8/PPPPPPPP/RNBBKNQR w KQkq - 0 1,Stockfish 17.1,e2e4,52,155,841,4,11,15,100793,0.019,10
 550,rnbknbqr/pppppppp/8/8/8/8/PPPPPPPP/RNBKNBQR w KQkq - 0 1,Stockfish 17.1,d2d4,65,222,775,3,11,18,101060,0.019,6
-551,rnbknqrb/pppppppp/8/8/8/8/PPPPPPPP/RNBKNQRB w KQkq - 0 1,Stockfish 17.1,g2g4,16,47,937,16,12,17,100465,0.018,6
+551,rnbknqrb/pppppppp/8/8/8/8/PPPPPPPP/RNBKNQRB w KQkq - 0 1,Stockfish 17.1,g2g4,18,52,933,15,34,48,100004387,26.574,531
 552,rbnkbnqr/pppppppp/8/8/8/8/PPPPPPPP/RBNKBNQR w KQkq - 0 1,Stockfish 17.1,d2d4,29,73,917,10,11,17,100777,0.015,7
 553,rnkbbnqr/pppppppp/8/8/8/8/PPPPPPPP/RNKBBNQR w KQkq - 0 1,Stockfish 17.1,e2e4,43,115,879,6,12,19,100857,0.017,8
 554,rnknbbqr/pppppppp/8/8/8/8/PPPPPPPP/RNKNBBQR w KQkq - 0 1,Stockfish 17.1,b1c3,24,63,925,12,12,17,101219,0.018,7
@@ -822,14 +822,14 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 820,rbbknqrn/pppppppp/8/8/8/8/PPPPPPPP/RBBKNQRN w KQkq - 0 1,Stockfish 17.1,f2f4,48,135,860,5,12,14,100762,0.018,8
 821,rkbbnqrn/pppppppp/8/8/8/8/PPPPPPPP/RKBBNQRN w KQkq - 0 1,Stockfish 17.1,e2e4,48,135,860,5,14,19,100349,0.019,9
 822,rkbnqbrn/pppppppp/8/8/8/8/PPPPPPPP/RKBNQBRN w KQkq - 0 1,Stockfish 17.1,d2d4,46,128,866,6,11,18,100450,0.018,6
-823,rkbnqrnb/pppppppp/8/8/8/8/PPPPPPPP/RKBNQRNB w KQkq - 0 1,Stockfish 17.1,e2e4,21,57,930,13,12,19,100129,0.016,7
+823,rkbnqrnb/pppppppp/8/8/8/8/PPPPPPPP/RKBNQRNB w KQkq - 0 1,Stockfish 17.1,e2e4,16,49,935,16,33,44,100010171,23.657,508
 824,rbknbqrn/pppppppp/8/8/8/8/PPPPPPPP/RBKNBQRN w KQkq - 0 1,Stockfish 17.1,a2a4,33,85,906,9,9,17,100153,0.018,7
 825,rknbbqrn/pppppppp/8/8/8/8/PPPPPPPP/RKNBBQRN w KQkq - 0 1,Stockfish 17.1,a2a4,28,71,918,11,11,17,100630,0.018,6
 826,rknqbbrn/pppppppp/8/8/8/8/PPPPPPPP/RKNQBBRN w KQkq - 0 1,Stockfish 17.1,a2a4,15,47,937,16,10,17,100785,0.017,6
 827,rknqbrnb/pppppppp/8/8/8/8/PPPPPPPP/RKNQBRNB w KQkq - 0 1,Stockfish 17.1,a2a4,36,94,898,8,13,20,100332,0.019,6
 828,rbknqrbn/pppppppp/8/8/8/8/PPPPPPPP/RBKNQRBN w KQkq - 0 1,Stockfish 17.1,a2a4,41,108,885,7,10,17,100715,0.016,8
 829,rknbqrbn/pppppppp/8/8/8/8/PPPPPPPP/RKNBQRBN w KQkq - 0 1,Stockfish 17.1,f2f4,57,177,819,4,12,20,100422,0.018,7
-830,rknqrbbn/pppppppp/8/8/8/8/PPPPPPPP/RKNQRBBN w KQkq - 0 1,Stockfish 17.1,e2e4,50,143,852,5,13,20,100093,0.015,8
+830,rknqrbbn/pppppppp/8/8/8/8/PPPPPPPP/RKNQRBBN w KQkq - 0 1,Stockfish 17.1,e2e4,39,102,891,7,33,56,100006384,22.709,493
 831,rknqrnbb/pppppppp/8/8/8/8/PPPPPPPP/RKNQRNBB w KQkq - 0 1,Stockfish 17.1,a2a4,61,199,798,3,13,19,100649,0.016,8
 832,bbrknrqn/pppppppp/8/8/8/8/PPPPPPPP/BBRKNRQN w KQkq - 0 1,Stockfish 17.1,c2c4,20,54,932,14,11,21,100897,0.019,9
 833,brkbnrqn/pppppppp/8/8/8/8/PPPPPPPP/BRKBNRQN w KQkq - 0 1,Stockfish 17.1,g2g4,27,71,918,11,12,16,100975,0.016,10
