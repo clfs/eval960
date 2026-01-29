@@ -39,7 +39,7 @@ def main():
 
                 best[key] = entry
 
-    writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
+    writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames, lineterminator='\n')
     writer.writeheader()
     for k in sorted(best.keys()):
         writer.writerow(best[k])
