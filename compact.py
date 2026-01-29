@@ -1,5 +1,9 @@
 import argparse
-import json
+import csv
+import dataclasses
+import sys
+
+from eval import Result
 
 
 def main():
@@ -10,16 +14,20 @@ def main():
         "files",
         metavar="FILE",
         nargs="+",
-        help="one or more .jsonl files",
+        help="one or more .csv files",
     )
     args = parser.parse_args()
 
     best = {}
+    fieldnames = [f.name for f in dataclasses.fields(Result)]
 
     for path in args.files:
-        with open(path, "r") as f:
-            for line in f:
-                entry = json.loads(line.strip())
+        with open(path, "r", newline="") as f:
+            reader = csv.DictReader(f)
+            for entry in reader:
+                # Convert numeric fields for correct sorting/comparison.
+                entry["id"] = int(entry["id"])
+                entry["nodes"] = int(entry["nodes"])
 
                 # Deduplicate by position ID and engine name.
                 key = (entry["id"], entry["engine"])
@@ -31,8 +39,10 @@ def main():
 
                 best[key] = entry
 
+    writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
+    writer.writeheader()
     for k in sorted(best.keys()):
-        print(json.dumps(best[k], separators=(",", ":")))
+        writer.writerow(best[k])
 
 
 if __name__ == "__main__":

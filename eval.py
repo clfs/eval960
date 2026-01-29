@@ -1,6 +1,6 @@
 import argparse
 import dataclasses
-import json
+import csv
 import sys
 
 import chess
@@ -13,8 +13,7 @@ class Result:
     fen: str
     engine: str
     move: str
-    score: int | None
-    mate: int | None
+    score: int
     wins: int
     draws: int
     losses: int
@@ -85,6 +84,10 @@ def main():
     else:
         ids = set(range(960))
 
+    fields = [f.name for f in dataclasses.fields(Result)]
+    writer = csv.DictWriter(sys.stdout, fieldnames=fields)
+    writer.writeheader()
+
     with chess.engine.SimpleEngine.popen_uci(args.stockfish) as stockfish:
         name = stockfish.id["name"]
 
@@ -104,7 +107,6 @@ def main():
                 engine=name,
                 move=info["pv"][0].uci(),
                 score=info["score"].white().score(),
-                mate=info["score"].white().mate(),
                 wins=info["wdl"].white().wins,
                 draws=info["wdl"].white().draws,
                 losses=info["wdl"].white().losses,
@@ -114,7 +116,7 @@ def main():
                 time=info["time"],
                 hashfull=info["hashfull"],
             )
-            print(json.dumps(dataclasses.asdict(result), separators=(",", ":")))
+            writer.writerow(dataclasses.asdict(result))
             sys.stdout.flush()
 
 
