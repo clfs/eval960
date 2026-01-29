@@ -87,6 +87,7 @@ def main():
     fields = [f.name for f in dataclasses.fields(Result)]
     writer = csv.DictWriter(sys.stdout, fieldnames=fields)
     writer.writeheader()
+    sys.stdout.flush()
 
     with chess.engine.SimpleEngine.popen_uci(args.stockfish) as stockfish:
         name = stockfish.id["name"]
