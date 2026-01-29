@@ -241,7 +241,7 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 239,nrqknrbb/pppppppp/8/8/8/8/PPPPPPPP/NRQKNRBB w KQkq - 0 1,Stockfish 17.1,f2f4,59,190,807,3,11,19,100107,0.017,2
 240,bbnrkqnr/pppppppp/8/8/8/8/PPPPPPPP/BBNRKQNR w KQkq - 0 1,Stockfish 17.1,b2b4,50,144,851,5,11,20,100219,0.018,1
 241,bnrbkqnr/pppppppp/8/8/8/8/PPPPPPPP/BNRBKQNR w KQkq - 0 1,Stockfish 17.1,c2c4,22,58,929,13,11,19,100688,0.017,2
-242,bnrkqbnr/pppppppp/8/8/8/8/PPPPPPPP/BNRKQBNR w KQkq - 0 1,Stockfish 17.1,e2e4,24,62,926,12,12,17,100376,0.016,2
+242,bnrkqbnr/pppppppp/8/8/8/8/PPPPPPPP/BNRKQBNR w KQkq - 0 1,Stockfish 17.1,e2e4,20,56,930,14,43,52,100000060,93.938,551
 243,bnrkqnrb/pppppppp/8/8/8/8/PPPPPPPP/BNRKQNRB w KQkq - 0 1,Stockfish 17.1,d1c1,16,48,936,16,10,21,100504,0.019,2
 244,nbbrkqnr/pppppppp/8/8/8/8/PPPPPPPP/NBBRKQNR w KQkq - 0 1,Stockfish 17.1,e2e4,52,154,842,4,12,17,100978,0.017,3
 245,nrbbkqnr/pppppppp/8/8/8/8/PPPPPPPP/NRBBKQNR w KQkq - 0 1,Stockfish 17.1,e2e4,41,109,884,7,10,15,100919,0.02,1
@@ -250,7 +250,7 @@ id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
 248,nbrkbqnr/pppppppp/8/8/8/8/PPPPPPPP/NBRKBQNR w KQkq - 0 1,Stockfish 17.1,c2c4,46,128,866,6,11,19,100742,0.018,2
 249,nrkbbqnr/pppppppp/8/8/8/8/PPPPPPPP/NRKBBQNR w KQkq - 0 1,Stockfish 17.1,e2e4,54,165,831,4,10,18,100106,0.018,3
 250,nrkqbbnr/pppppppp/8/8/8/8/PPPPPPPP/NRKQBBNR w KQkq - 0 1,Stockfish 17.1,c2c4,57,180,816,4,11,16,100366,0.019,2
-251,nrkqbnrb/pppppppp/8/8/8/8/PPPPPPPP/NRKQBNRB w KQkq - 0 1,Stockfish 17.1,d2d4,25,66,923,11,11,20,102020,0.017,2
+251,nrkqbnrb/pppppppp/8/8/8/8/PPPPPPPP/NRKQBNRB w KQkq - 0 1,Stockfish 17.1,e2e4,55,169,827,4,39,57,100000116,96.893,572
 252,nbrkqnbr/pppppppp/8/8/8/8/PPPPPPPP/NBRKQNBR w KQkq - 0 1,Stockfish 17.1,c2c4,27,69,920,11,12,18,100160,0.019,4
 253,nrkbqnbr/pppppppp/8/8/8/8/PPPPPPPP/NRKBQNBR w KQkq - 0 1,Stockfish 17.1,f2f4,45,126,868,6,10,14,100072,0.018,2
 254,nrkqnbbr/pppppppp/8/8/8/8/PPPPPPPP/NRKQNBBR w KQkq - 0 1,Stockfish 17.1,e2e4,56,173,823,4,9,19,101105,0.018,3
