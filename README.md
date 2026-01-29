@@ -2,6 +2,10 @@
 
 Stockfish evaluations for all Chess960 positions.
 
+- [View the results in Google Sheets](https://docs.google.com/spreadsheets/d/14g88i_mvk2ytQZdp_1tAvJE49pJC4-o6CuNqN4KDcBc/edit)
+- [Download the results as a CSV](https://raw.githubusercontent.com/clfs/eval960/refs/heads/main/results.csv)
+- [Use Datasette Lite to query the data in your browser](https://lite.datasette.io/?csv=https%3A%2F%2Fraw.githubusercontent.com%2Fclfs%2Feval960%2Frefs%2Fheads%2Fmain%2Fresults.csv#/data?sql=select+*+from+results)
+
 ## Requirements
 
 ```plaintext
