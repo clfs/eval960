@@ -56,8 +56,13 @@ def main():
         "--nodes",
         type=int,
         metavar="N",
-        default=100000,
-        help="set soft node limit for analysis (default: 100000)",
+        help="set soft node limit for analysis",
+    )
+    parser.add_argument(
+        "--depth",
+        type=int,
+        metavar="N",
+        help="set depth limit for analysis",
     )
     parser.add_argument(
         "--threads",
@@ -74,6 +79,9 @@ def main():
         help="set hash size in MB (default: 1024)",
     )
     args = parser.parse_args()
+
+    if args.nodes is None and args.depth is None:
+        parser.error("At least one of --nodes or --depth must be provided")
 
     ids = set()
     if args.id:
@@ -96,7 +104,7 @@ def main():
             {"UCI_ShowWDL": True, "Threads": args.threads, "Hash": args.hash}
         )
 
-        limit = chess.engine.Limit(nodes=args.nodes)
+        limit = chess.engine.Limit(nodes=args.nodes, depth=args.depth)
 
         for n in sorted(ids):
             board = chess.Board.from_chess960_pos(n)
