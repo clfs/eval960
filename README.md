@@ -20,7 +20,7 @@ Stockfish evaluations for all Chess960 positions.
 ```plaintext
 ; uv run eval.py -h
 usage: eval.py [-h] --stockfish PATH [--id N | --range M-N] [--nodes N]
-               [--threads N] [--hash N]
+               [--depth N] [--threads N] [--hash N]
 
 Analyze Chess960 starting positions with Stockfish.
 
@@ -29,7 +29,8 @@ options:
   --stockfish PATH  path to the Stockfish executable
   --id N            analyze position N; can be provided multiple times
   --range M-N       analyze positions M through N inclusive
-  --nodes N         set soft node limit for analysis (default: 100000)
+  --nodes N         set soft node limit for analysis
+  --depth N         set depth limit for analysis
   --threads N       set number of threads to use (default: 1)
   --hash N          set hash size in MB (default: 1024)
 
