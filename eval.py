@@ -52,17 +52,24 @@ def main():
         help="analyze positions M through N inclusive",
     )
 
-    parser.add_argument(
+    limits = parser.add_argument_group("limits")
+    limits.add_argument(
         "--nodes",
         type=int,
         metavar="N",
-        help="set soft node limit for analysis",
+        help="set a soft node limit for each analysis",
     )
-    parser.add_argument(
+    limits.add_argument(
         "--depth",
         type=int,
         metavar="N",
-        help="set depth limit for analysis",
+        help="set a depth limit for each analysis",
+    )
+    limits.add_argument(
+        "--time",
+        type=float,
+        metavar="SECONDS",
+        help="set a time limit for each analysis in seconds",
     )
     parser.add_argument(
         "--threads",
@@ -80,8 +87,8 @@ def main():
     )
     args = parser.parse_args()
 
-    if args.nodes is None and args.depth is None:
-        parser.error("At least one of --nodes or --depth must be provided")
+    if args.nodes is None and args.depth is None and args.time is None:
+        parser.error("At least one of --nodes, --depth, or --time must be provided")
 
     ids = set()
     if args.id:
@@ -104,7 +111,7 @@ def main():
             {"UCI_ShowWDL": True, "Threads": args.threads, "Hash": args.hash}
         )
 
-        limit = chess.engine.Limit(nodes=args.nodes, depth=args.depth)
+        limit = chess.engine.Limit(nodes=args.nodes, depth=args.depth, time=args.time)
 
         for n in sorted(ids):
             board = chess.Board.from_chess960_pos(n)
