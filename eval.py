@@ -12,7 +12,7 @@ class Result:
     id: int
     fen: str
     engine: str
-    move: str
+    bestmove: str
     eval: float
     wins: int
     draws: int
@@ -22,6 +22,7 @@ class Result:
     nodes: int
     time: float
     hashfull: int
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -105,7 +106,7 @@ def main():
                 id=n,
                 fen=board.fen(),
                 engine=name,
-                move=info["pv"][0].uci(),
+                bestmove=board.san(info["pv"][0]),
                 eval=info["score"].white().score() / 100,
                 wins=info["wdl"].white().wins,
                 draws=info["wdl"].white().draws,
