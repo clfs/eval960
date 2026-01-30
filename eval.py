@@ -23,6 +23,7 @@ class Result:
     time: float
     hashfull: int
 
+
 def main():
     parser = argparse.ArgumentParser(
         description="Analyze Chess960 starting positions with Stockfish.",
@@ -105,7 +106,7 @@ def main():
                 id=n,
                 fen=board.fen(),
                 engine=name,
-                move=info["pv"][0].uci(),
+                move=board.san(info["pv"][0]),
                 eval=info["score"].white().score() / 100,
                 wins=info["wdl"].white().wins,
                 draws=info["wdl"].white().draws,
