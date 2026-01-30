@@ -8,7 +8,7 @@ from eval import Result
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Output the best analysis for each position-engine pair.",
+        description="For each (id, engine) pair, output the analysis with the highest node count.",
     )
     parser.add_argument(
         "files",
