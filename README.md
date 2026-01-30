@@ -55,14 +55,14 @@ options:
 Analyze positions 20 through 25:
 
 ```plaintext
-; uv run eval.py --stockfish $(which stockfish) --range 20-25
-id,fen,engine,move,score,wins,draws,losses,depth,seldepth,nodes,time,hashfull
-20,nbbqnrkr/pppppppp/8/8/8/8/PPPPPPPP/NBBQNRKR w KQkq - 0 1,Stockfish 17.1,c2c4,22,60,927,13,16,22,100055,0.185,0
-21,nqbbnrkr/pppppppp/8/8/8/8/PPPPPPPP/NQBBNRKR w KQkq - 0 1,Stockfish 17.1,h2h4,22,58,929,13,17,25,100087,0.173,0
-22,nqbnrbkr/pppppppp/8/8/8/8/PPPPPPPP/NQBNRBKR w KQkq - 0 1,Stockfish 17.1,d2d4,35,91,901,8,17,20,100039,0.179,0
-23,nqbnrkrb/pppppppp/8/8/8/8/PPPPPPPP/NQBNRKRB w KQkq - 0 1,Stockfish 17.1,f1g1,24,62,926,12,14,25,100028,0.196,0
-24,nbqnbrkr/pppppppp/8/8/8/8/PPPPPPPP/NBQNBRKR w KQkq - 0 1,Stockfish 17.1,d2d4,76,299,699,2,16,22,100012,0.18,0
-25,nqnbbrkr/pppppppp/8/8/8/8/PPPPPPPP/NQNBBRKR w KQkq - 0 1,Stockfish 17.1,d2d4,38,99,894,7,16,22,100052,0.193,1
+; uv run eval.py --stockfish $(which stockfish) --range 20-25 --nodes 100000
+id,fen,engine,bestmove,eval,wins,draws,losses,depth,seldepth,nodes,time,hashfull
+20,nbbqnrkr/pppppppp/8/8/8/8/PPPPPPPP/NBBQNRKR w KQkq - 0 1,Stockfish 17.1,c4,0.22,60,927,13,16,22,100055,0.166,0
+21,nqbbnrkr/pppppppp/8/8/8/8/PPPPPPPP/NQBBNRKR w KQkq - 0 1,Stockfish 17.1,h4,0.22,58,929,13,17,25,100087,0.175,0
+22,nqbnrbkr/pppppppp/8/8/8/8/PPPPPPPP/NQBNRBKR w KQkq - 0 1,Stockfish 17.1,d4,0.35,91,901,8,17,20,100039,0.167,0
+23,nqbnrkrb/pppppppp/8/8/8/8/PPPPPPPP/NQBNRKRB w KQkq - 0 1,Stockfish 17.1,O-O,0.24,62,926,12,14,25,100028,0.195,0
+24,nbqnbrkr/pppppppp/8/8/8/8/PPPPPPPP/NBQNBRKR w KQkq - 0 1,Stockfish 17.1,d4,0.76,299,699,2,16,22,100012,0.182,0
+25,nqnbbrkr/pppppppp/8/8/8/8/PPPPPPPP/NQNBBRKR w KQkq - 0 1,Stockfish 17.1,d4,0.38,99,894,7,16,22,100052,0.184,1
 ```
 
 Compact multiple analysis files:
