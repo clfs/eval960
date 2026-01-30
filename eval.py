@@ -29,23 +29,39 @@ def main():
         description="Analyze Chess960 starting positions with Stockfish.",
         epilog="If neither --id nor --range is provided, all 960 positions are analyzed.",
     )
-    parser.add_argument(
+
+    engine = parser.add_argument_group("engine configuration")
+    engine.add_argument(
         "--stockfish",
         type=str,
         metavar="PATH",
         required=True,
         help="path to the Stockfish executable",
     )
+    engine.add_argument(
+        "--threads",
+        type=int,
+        metavar="N",
+        default=1,
+        help="set number of threads to use (default: 1)",
+    )
+    engine.add_argument(
+        "--hash",
+        type=int,
+        metavar="N",
+        default=1024,
+        help="set hash size in MB (default: 1024)",
+    )
 
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument(
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument(
         "--id",
         type=int,
         metavar="N",
         action="append",
         help="analyze position N; can be provided multiple times",
     )
-    group.add_argument(
+    selection.add_argument(
         "--range",
         type=str,
         metavar="M-N",
@@ -71,20 +87,7 @@ def main():
         metavar="SECONDS",
         help="set a time limit for each analysis in seconds",
     )
-    parser.add_argument(
-        "--threads",
-        type=int,
-        metavar="N",
-        default=1,
-        help="set number of threads to use (default: 1)",
-    )
-    parser.add_argument(
-        "--hash",
-        type=int,
-        metavar="N",
-        default=1024,
-        help="set hash size in MB (default: 1024)",
-    )
+
     args = parser.parse_args()
 
     if args.nodes is None and args.depth is None and args.time is None:
