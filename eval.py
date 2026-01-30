@@ -103,7 +103,7 @@ def main():
         ids = set(range(960))
 
     fields = [f.name for f in dataclasses.fields(Result)]
-    writer = csv.DictWriter(sys.stdout, fieldnames=fields)
+    writer = csv.DictWriter(sys.stdout, fieldnames=fields, lineterminator="\n")
     writer.writeheader()
     sys.stdout.flush()
 
