@@ -30,7 +30,7 @@ def main():
         epilog="If neither --id nor --range is provided, all 960 positions are analyzed.",
     )
 
-    engine = parser.add_argument_group("engine configuration")
+    engine = parser.add_argument_group("engine settings")
     engine.add_argument(
         "--stockfish",
         type=str,
@@ -52,6 +52,13 @@ def main():
         default=1024,
         help="set hash size in MB (default: 1024)",
     )
+    engine.add_argument(
+        "--depth",
+        type=int,
+        metavar="N",
+        default=20,
+        help="set a depth limit (default: 20)",
+    )
 
     selection = parser.add_mutually_exclusive_group()
     selection.add_argument(
@@ -66,15 +73,6 @@ def main():
         type=str,
         metavar="M-N",
         help="analyze positions M through N inclusive",
-    )
-
-    limits = parser.add_argument_group("limits")
-    limits.add_argument(
-        "--depth",
-        type=int,
-        metavar="N",
-        default=20,
-        help="set a depth limit for each analysis (default: 20)",
     )
 
     args = parser.parse_args()
