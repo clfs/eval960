@@ -19,20 +19,21 @@ Stockfish evaluations for all Chess960 positions.
 
 ```plaintext
 ; uv run eval.py -h
-usage: eval.py [-h] --stockfish PATH [--id N | --range M-N] [--nodes N]
-               [--depth N] [--threads N] [--hash N]
+usage: eval.py [-h] --stockfish PATH [--threads N] [--hash N] [--depth N]
+               [--id N | --range M-N]
 
 Analyze Chess960 starting positions with Stockfish.
 
 options:
   -h, --help        show this help message and exit
-  --stockfish PATH  path to the Stockfish executable
   --id N            analyze position N; can be provided multiple times
   --range M-N       analyze positions M through N inclusive
-  --nodes N         set soft node limit for analysis
-  --depth N         set depth limit for analysis
+
+engine settings:
+  --stockfish PATH  path to the Stockfish executable
   --threads N       set number of threads to use (default: 1)
   --hash N          set hash size in MB (default: 1024)
+  --depth N         set a depth limit (default: 20)
 
 If neither --id nor --range is provided, all 960 positions are analyzed.
 ```
@@ -55,14 +56,14 @@ options:
 Analyze positions 20 through 25:
 
 ```plaintext
-; uv run eval.py --stockfish $(which stockfish) --range 20-25 --nodes 100000
+; uv run eval.py --stockfish $(which stockfish) --range 20-25 --depth 20
 id,fen,engine,bestmove,eval,wins,draws,losses,depth,seldepth,nodes,time,hashfull
-20,nbbqnrkr/pppppppp/8/8/8/8/PPPPPPPP/NBBQNRKR w KQkq - 0 1,Stockfish 17.1,c4,0.22,60,927,13,16,22,100055,0.166,0
-21,nqbbnrkr/pppppppp/8/8/8/8/PPPPPPPP/NQBBNRKR w KQkq - 0 1,Stockfish 17.1,h4,0.22,58,929,13,17,25,100087,0.175,0
-22,nqbnrbkr/pppppppp/8/8/8/8/PPPPPPPP/NQBNRBKR w KQkq - 0 1,Stockfish 17.1,d4,0.35,91,901,8,17,20,100039,0.167,0
-23,nqbnrkrb/pppppppp/8/8/8/8/PPPPPPPP/NQBNRKRB w KQkq - 0 1,Stockfish 17.1,O-O,0.24,62,926,12,14,25,100028,0.195,0
-24,nbqnbrkr/pppppppp/8/8/8/8/PPPPPPPP/NBQNBRKR w KQkq - 0 1,Stockfish 17.1,d4,0.76,299,699,2,16,22,100012,0.182,0
-25,nqnbbrkr/pppppppp/8/8/8/8/PPPPPPPP/NQNBBRKR w KQkq - 0 1,Stockfish 17.1,d4,0.38,99,894,7,16,22,100052,0.184,1
+20,nbbqnrkr/pppppppp/8/8/8/8/PPPPPPPP/NBBQNRKR w KQkq - 0 1,Stockfish 17.1,c4,0.26,67,922,11,20,29,322512,0.568,0
+21,nqbbnrkr/pppppppp/8/8/8/8/PPPPPPPP/NQBBNRKR w KQkq - 0 1,Stockfish 17.1,c4,0.27,70,919,11,20,26,904568,1.65,4
+22,nqbnrbkr/pppppppp/8/8/8/8/PPPPPPPP/NQBNRBKR w KQkq - 0 1,Stockfish 17.1,d4,0.38,100,893,7,20,32,399411,0.689,2
+23,nqbnrkrb/pppppppp/8/8/8/8/PPPPPPPP/NQBNRKRB w KQkq - 0 1,Stockfish 17.1,O-O,0.16,47,937,16,20,25,319385,0.541,0
+24,nbqnbrkr/pppppppp/8/8/8/8/PPPPPPPP/NBQNBRKR w KQkq - 0 1,Stockfish 17.1,d4,0.63,212,785,3,20,35,898726,1.649,5
+25,nqnbbrkr/pppppppp/8/8/8/8/PPPPPPPP/NQNBBRKR w KQkq - 0 1,Stockfish 17.1,h4,0.39,103,890,7,20,30,632762,1.163,4
 ```
 
 Compact multiple analysis files:
